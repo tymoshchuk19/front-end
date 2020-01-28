@@ -12,12 +12,7 @@ const routes = [
     component: HomePage
   },
   {
-    path: '/groups',
-    name: 'groups',
-    component: GroupPage
-  },
-  {
-    path: '/groups/:groups_id',
+    path: '/groups/:group_id',
     name: 'groups',
     component: GroupPage
   }

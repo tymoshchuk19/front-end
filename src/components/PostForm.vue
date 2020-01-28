@@ -53,7 +53,6 @@
       rules: [v => !!v || 'Content is required.'],
       body: '',
       tag: '',
-      api: null
     }),
 
     computed: {

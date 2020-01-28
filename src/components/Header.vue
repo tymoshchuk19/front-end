@@ -7,13 +7,13 @@
         <h1 
         class="text-center primary white--text"
         >
-        Ricardo Canela
+        {{name}}
         </h1>
     </header>
 </template>
 
 <script>
 export default {
-  name: 'header'
+    props: ['name']
 }
 </script>

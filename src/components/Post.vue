@@ -25,7 +25,7 @@
           <span class="white--text text-lowercase mr-2">{{ nlikes }}</span>
           <v-icon v-if="liked" color='white'>mdi-thumb-up</v-icon>
           <v-icon v-else color='white'>mdi-thumb-up-outline</v-icon>
-      </v-btn>
+    </v-btn>
     </v-card-actions>
   </v-card>
 </template>

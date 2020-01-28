@@ -6,7 +6,7 @@
         <wm-workum></wm-workum>
       </v-col>
       <v-col cols="6">
-        <wm-header></wm-header>
+        <wm-header name="Ricardo Canela"></wm-header>
       </v-col>
       <v-col cols="3">
         <wm-signout></wm-signout>
