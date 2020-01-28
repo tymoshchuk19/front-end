@@ -27,21 +27,30 @@
           <v-icon v-else color='white'>mdi-thumb-up-outline</v-icon>
     </v-btn>
     </v-card-actions>
+    <wm-comments @newLike="getCommments" :postid="post._id" :coms="comments" ></wm-comments>
+    <wm-commentform @newComment="getCommments" :postid="post._id"></wm-commentform>
   </v-card>
 </template>
 
 <script>
 import { USER, API } from '../../config/config';
+import CommentsForm from '../components/CommentsForm';
+import Comments from '../components/Comments'
 import axios from "axios";
 
 /*eslint-disable no-console*/
 export default {
   props: ['post'],
+  components: {
+    'wm-commentform': CommentsForm,
+    'wm-comments': Comments
+  },
   data() {
     return {
       user : USER,
       nlikes: this.post.likes.length,
-      liked: this.post.likes.includes(USER)
+      liked: this.post.likes.includes(USER),
+      comments: null
     }
   },
   methods: {
@@ -54,7 +63,17 @@ export default {
           this.nlikes = p.data.likes.length;
           this.liked = p.data.likes.includes(USER);
         });
+    },
+    getCommments() {
+      axios.get(API + 'posts/' + this.post._id + '/comments')
+        .then(data => {
+          console.log(data.data);
+          this.comments = data.data;});
     }
+  },
+  mounted() {
+    this.getCommments();
   }
+  
 }
 </script>

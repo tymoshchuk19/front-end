@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     getPosts() {
-         axios.get(API + 'posts/' + this.$route.params.group_id )
+         axios.get(this.postApi)
         .then(data => this.posts = data.data.posts);
     },
     getGroup() {
@@ -55,7 +55,7 @@ export default {
         .then(data => this.group = data.data);
     }
   },
-  created() {
+  mounted() {
     this.getGroup();
     this.getPosts();
   }
