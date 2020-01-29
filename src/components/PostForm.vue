@@ -27,13 +27,16 @@
             label="Content"
             :rules="rules"
           ></v-textarea>
-          <v-text-field
-            v-model="tag"
-            :error-messages="tagErrors"
-            label="Tag"
-            @input="$v.tag.$touch()"
-            @blur="$v.tag.$touch()"
-          ></v-text-field>
+          <v-combobox
+                multiple
+                solo
+                clearable
+                v-model="tags"
+                chips
+                deletable-chips
+                label="Localização"
+            >
+          </v-combobox>
 
           <v-btn class="primary mr-4" text @click="submit">Submit</v-btn>
           <v-btn color="primary darken-1" text @click="dialog = false">Close</v-btn>
@@ -65,7 +68,7 @@ export default {
       title: '',
       rules: [v => !!v || 'Content is required.'],
       body: '',
-      tag: '',
+      tags: '',
     }),
 
   computed: {
@@ -88,7 +91,7 @@ export default {
         .post(this.api, {
           title: this.title,
           body: this.body,
-          tags: this.tag ? [this.tag] : []
+          tags: this.tag ? this.tags : []
         })
         .then(() => { 
           this.dialog = false;

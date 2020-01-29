@@ -1,31 +1,39 @@
 <template>
    <div>
     <v-row>
-      <v-col cols="3">
-        <wm-workum></wm-workum>
+      <v-col cols="1">
+        <wm-sidebar></wm-sidebar>
       </v-col>
-      <v-col cols="6">
-        <wm-header :name="group.name"></wm-header>
-      </v-col>
-      <v-col cols="3">
-        <wm-signout></wm-signout>
+      <v-col cols="11">
+        <v-row>
+          <v-col cols="2">
+            <wm-workum></wm-workum>
+          </v-col>
+          <v-col cols="6">
+            <wm-header :name="group.name"></wm-header>
+          </v-col>
+          <v-col cols="3">
+            <wm-signout></wm-signout>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="2" class="secondary">
+            <wm-groupform @newGroup="getGroups"></wm-groupform>
+            <wm-groups :groups="groups" :path="path"></wm-groups>
+          </v-col>
+          <v-col cols="6">
+            <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
+            <v-divider class="mb-2"></v-divider> 
+            <wm-posts :posts="posts"></wm-posts>
+          </v-col>
+          <v-col cols="3" class="secondary">
+            <wm-taskform @newTask="getTasks" :taskApi="taskApi"></wm-taskform>
+            <wm-tasks :tasks="tasks"></wm-tasks>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="3" class="secondary">
-        <wm-groupform @newGroup="getGroups"></wm-groupform>
-        <wm-groups :groups="groups" :path="path"></wm-groups>
-      </v-col>
-      <v-col cols="6">
-        <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
-        <v-divider class="mb-2"></v-divider> 
-        <wm-posts :posts="posts"></wm-posts>
-      </v-col>
-      <v-col cols="3" class="secondary">
-        <wm-taskform @newTask="getTasks" :taskApi="taskApi"></wm-taskform>
-        <wm-tasks :tasks="tasks"></wm-tasks>
-      </v-col>
-    </v-row>
+    <wm-footer></wm-footer>
   </div>
 </template>
 
@@ -41,6 +49,8 @@ import GroupForm from '../components/GroupForm'
 import Groups from '../components/Groups'
 import { API } from '../../config/config';
 import axios from 'axios';
+import Footer from '../components/Footer'
+import SideBar from '../components/SideBar'
 
 export default {
   components: {
@@ -52,7 +62,9 @@ export default {
     'wm-tasks': Tasks,
     'wm-taskform': TasksForm,
     'wm-groupform': GroupForm,
-    'wm-groups': Groups
+    'wm-groups': Groups,
+    'wm-footer': Footer,
+    'wm-sidebar': SideBar
   },
   data() {
     return {

@@ -16,7 +16,7 @@
               hint="MM/DD/YYYY format"
               persistent-hint
               prepend-icon="mdi-calendar-today"
-              @blur="date = parseDate(dateFormatted)"
+              @blur="date = parseDate(dateFormatted); newDate();"
               v-on="on"
             ></v-text-field>
           </template>

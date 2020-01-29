@@ -65,6 +65,8 @@
     },
     methods: {
       updateDate(updatedDate) {
+        console.log(updatedDate);
+        
         this.date = updatedDate;
       },
       submit () {

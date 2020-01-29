@@ -1,30 +1,38 @@
 <template>
-  <div class="home">
+  <div class="home">   
     <v-row>
-      <v-col cols="3">
-        <wm-workum></wm-workum>
+      <v-col cols="1">
+        <wm-sidebar></wm-sidebar>
       </v-col>
-      <v-col cols="6">
-        <wm-header name="Ricardo Canela"></wm-header>
-      </v-col>
-      <v-col cols="3">
-        <wm-signout></wm-signout>
-      </v-col>
-    </v-row>
+      <v-col cols="11">
+        <v-row>
+          <v-col cols="3">
+            <wm-workum></wm-workum>
+          </v-col>
+          <v-col cols="6">
+            <wm-header name="Ricardo Canela"></wm-header>
+          </v-col>
+          <v-col cols="3">
+            <wm-signout></wm-signout>
+          </v-col>
+        </v-row>
 
-    <v-row>
-      <v-col cols="3" class="secondary">
-        <wm-groupform @newGroup="getGroups"></wm-groupform>
-        <wm-groups :groups="groups" :path="path"></wm-groups>
-      </v-col>
-      <v-col cols="6" class="secondary">
-        <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
-        <wm-posts :posts="posts"></wm-posts>
-      </v-col>
-      <v-col cols="3" class="secondary">
-        <wm-tasks :tasks="tasks"></wm-tasks>
+        <v-row>
+          <v-col cols="3" class="secondary">
+            <wm-groupform @newGroup="getGroups"></wm-groupform>
+            <wm-groups :groups="groups" :path="path"></wm-groups>
+          </v-col>
+          <v-col cols="6" class="secondary">
+            <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
+            <wm-posts :posts="posts"></wm-posts>
+          </v-col>
+          <v-col cols="3" class="secondary">
+            <wm-tasks :tasks="tasks"></wm-tasks>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
+    <wm-footer></wm-footer>
   </div>
 </template>
 
@@ -39,6 +47,8 @@ import PostForm from '../components/PostForm'
 import { USER, API } from '../../config/config';
 import axios from 'axios';
 import GroupForm from '../components/GroupForm'
+import Footer from '../components/Footer'
+import SideBar from '../components/SideBar'
 
 export default {
   name: "home",
@@ -50,7 +60,9 @@ export default {
     'wm-groups': Groups,
     'wm-signout': Signout,
     'wm-postform': PostForm,
-    'wm-groupform': GroupForm
+    'wm-groupform': GroupForm,
+    'wm-footer': Footer,
+    'wm-sidebar': SideBar
   },
   data() {
     return {
