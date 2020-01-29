@@ -1,22 +1,18 @@
 <template>
   <v-card class="pa-2">
-    <form>
-      <v-row no-gutters>
-        <v-col cols="12" sm="10">
-          <v-textarea
-            counter
-            outlined
-            v-model="body"
-            label="Comment"
-            :rules="rules"
-            auto-grow
-            rows="1"
-          ></v-textarea>
-        </v-col>
-        <v-col cols="12" sm="2">
-          <v-btn class="mr-4" @click="submit">submit</v-btn>
-        </v-col>
-      </v-row>
+    <form class="d-flex">
+      <v-text-field
+        v-model="body"
+        label="Comment"
+        single-line
+        solo-inverted
+        dense
+        rounded
+        hide-details
+      ></v-text-field>
+      <v-btn class="ml-3" icon color="primary" v-on:click="postMessage(message)">
+        <v-icon @click="submit" size="45">mdi-send-circle</v-icon>
+      </v-btn>
     </form>
   </v-card>
 </template>
