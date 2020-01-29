@@ -1,7 +1,7 @@
 <template>
   <div class="home">
 
-    <v-row>
+    <v-row >
       <v-col cols="3">
         <wm-workum></wm-workum>
       </v-col>
@@ -14,16 +14,16 @@
     </v-row>
 
     <v-row>
-      <v-col cols="3">
+      <v-col cols="3" class="secondary">
         <wm-groupform @newGroup="getGroups"></wm-groupform>
-        <wm-groups :groups="groups"></wm-groups>
+        <wm-groups :groups="groups" :path="path"></wm-groups>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="6" class="secondary">
         <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
         <wm-posts :posts="posts"></wm-posts>
       </v-col>
-      <v-col cols="3">
-        <wm-deliverables></wm-deliverables>
+      <v-col cols="3" class="secondary">
+        <wm-tasks :tasks="tasks"></wm-tasks>
       </v-col>
     </v-row>
     
@@ -33,7 +33,7 @@
 <script>
 import Posts from '../components/Posts'
 import Workum from '../components/Workum'
-import Deliverables from '../components/Deliverables'
+import Tasks from '../components/Tasks'
 import Header from '../components/Header'
 import Groups from '../components/Groups'
 import Signout from '../components/Signout'
@@ -47,7 +47,7 @@ export default {
   components: {
     'wm-posts': Posts,
     'wm-workum': Workum,
-    'wm-deliverables': Deliverables,
+    'wm-tasks': Tasks,
     'wm-header': Header,
     'wm-groups': Groups,
     'wm-signout': Signout,
@@ -56,9 +56,11 @@ export default {
   },
   data() {
     return {
-        posts: null,
-        groups: null,
-        postApi: API + 'posts'
+      path: 'groups/',
+      posts: null,
+      groups: null,
+      tasks: null,
+      postApi: API + 'posts'
     }
   },
   methods: {
@@ -69,12 +71,17 @@ export default {
     getGroups() {
          axios.get(API + 'groups')
           .then(data => this.groups = data.data);
+    },
+    getTasks() {
+         axios.get(API + 'users/' + USER + '/tasks')
+          .then(data => this.tasks = data.data);
     }
 
   },
   mounted() {
     this.getPosts();
     this.getGroups();
+    this.getTasks();
   }
 }
 </script>
