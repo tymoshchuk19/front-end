@@ -60,6 +60,13 @@
       rules: [v => !!v || 'Description is required.'],
       date: ''
     }),
+    created(){
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; 
+        var yyyy = today.getFullYear();
+        this.date = mm + '/' + dd + '/' + yyyy;
+    },
     computed: {
       titleErrors () {
         const errors = []
@@ -79,6 +86,7 @@
             date: this.date
         })
             .then(() => { 
+            this.dialog = false;
             this.$emit('newTask'); 
             this.clear()
             });

@@ -73,6 +73,7 @@
             description: this.description
       })
         .then(() => { 
+          this.dialog = false;
           this.$emit('newGroup'); 
           this.clear()
         });

@@ -8,7 +8,7 @@
       <v-expansion-panel-header>{{task.title}} | {{task.date}}</v-expansion-panel-header>
       <v-expansion-panel-content>
         [{{task.group.name}}]
-        Descrição: {{task.description}}
+        <span> Descrição: {{task.description}} </span>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>

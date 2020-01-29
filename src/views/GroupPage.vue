@@ -27,7 +27,7 @@
             <wm-posts :posts="posts"></wm-posts>
           </v-col>
           <v-col cols="3" class="secondary">
-            <wm-taskform @newTask="getTasks" :taskApi="taskApi"></wm-taskform>
+            <wm-taskform @newTask="() => getTasks(group_id)" :taskApi="taskApi"></wm-taskform>
             <wm-tasks :tasks="tasks"></wm-tasks>
           </v-col>
         </v-row>
@@ -74,6 +74,7 @@ export default {
       group: { name: null },
       posts: null,
       groups: null,
+      group_id: this.$route.params.group_id,
       tasks: null,
       postApi: API + "groups/" + this.$route.params.group_id + "/posts",
       taskApi: API + "groups/" + this.$route.params.group_id + "/tasks"
@@ -82,6 +83,9 @@ export default {
   watch: {
     $route: function(to) {
       console.log(to.params.group_id);
+
+      this.group_id = to.params.group_id;
+      this.taskApi = API + "groups/" + to.params.group_id + "/tasks"
 
       this.getGroup(to.params.group_id);
       this.getGroups();

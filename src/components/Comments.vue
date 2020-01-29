@@ -55,7 +55,9 @@ import { mapState } from "vuex";
 export default {
   props: ["coms", "postid"],
   data: () => {
-    return {};
+    return {
+      menu: false
+    };
   },
   methods: {
     like(id) {

@@ -68,6 +68,7 @@ export default {
   },
   data() {
     return {
+      menu: false,
       nlikes: this.post.likes.length,
       liked: false,
       comments: this.post.comments,
