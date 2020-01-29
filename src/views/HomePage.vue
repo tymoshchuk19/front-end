@@ -10,7 +10,7 @@
             <wm-workum></wm-workum>
           </v-col>
           <v-col cols="6">
-            <wm-header name="Ricardo Canela"></wm-header>
+            <wm-header :name="user.nome"></wm-header>
           </v-col>
           <v-col cols="3">
             <wm-signout></wm-signout>
@@ -44,11 +44,12 @@ import Header from '../components/Header'
 import Groups from '../components/Groups'
 import Signout from '../components/Signout'
 import PostForm from '../components/PostForm'
-import { USER, API } from '../../config/config';
-import axios from 'axios';
 import GroupForm from '../components/GroupForm'
 import Footer from '../components/Footer'
 import SideBar from '../components/SideBar'
+import { USER, API } from '../../config/config';
+import axios from 'axios';
+import { mapState } from "vuex";
 
 export default {
   name: "home",
@@ -89,6 +90,9 @@ export default {
     this.getPosts();
     this.getGroups();
     this.getTasks();
+  },
+  computed: {
+    ...mapState(["user"])
   }
 };
 </script>

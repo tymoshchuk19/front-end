@@ -7,12 +7,13 @@
     </div>
 </template>
 <script>
+import { API } from '../../config/config';
 import axios from 'axios';
 
 export default {
     methods: {
       logout() {
-        axios.get('logout')
+        axios.get(API + 'logout')
             .then(() => {
             this.$router.push('/login')
             })

@@ -55,8 +55,7 @@ export default {
   props: ["api"],
   validations: {
     title: { required },
-    body: { required },
-    tag: { required }
+    body: { required }
   },
 
     data: () => ({
@@ -87,7 +86,7 @@ export default {
         .post(this.api, {
           title: this.title,
           body: this.body,
-          tags: this.tag ? this.tags : []
+          tags: this.tags ? this.tags : []
         })
         .then(() => { 
           this.dialog = false;
@@ -99,7 +98,7 @@ export default {
       this.$v.$reset();
       this.title = "";
       this.body = "";
-      this.tag = "";
+      this.tags = "";
     }
   }
 };
