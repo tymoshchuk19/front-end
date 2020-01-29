@@ -36,7 +36,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-card-actions class="like-position">
-        <v-btn @click="() => {like(com._id)}" class="indigo like-position" text rounded small>
+        <v-btn @click="() => {like(com._id)}" class="secsecondary like-position" text rounded small>
           <span class="white--text text-lowercase mr-2">{{ com.likes.length }}</span>
           <v-icon v-if="isLiked(i)" color="white">mdi-thumb-up</v-icon>
           <v-icon v-else color="white">mdi-thumb-up-outline</v-icon>

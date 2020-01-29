@@ -39,7 +39,7 @@
       </v-list-item-content>
     </v-list-item>
     <v-card-actions class="d-flex flex-row-reverse">
-      <v-btn @click="like" class="indigo" text rounded>
+      <v-btn @click="like" class="secprimary" text rounded>
         <span class="white--text text-lowercase mr-2">{{ nlikes }}</span>
         <v-icon v-if="liked" color="white">mdi-thumb-up</v-icon>
         <v-icon v-else color="white">mdi-thumb-up-outline</v-icon>

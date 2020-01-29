@@ -19,7 +19,7 @@
         <v-row>
           <v-col cols="2" class="secondary">
             <wm-groupform @newGroup="getGroups"></wm-groupform>
-            <wm-groups :groups="groups" :path="path"></wm-groups>
+            <wm-groups :groups="groups" ></wm-groups>
           </v-col>
           <v-col cols="6">
             <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
@@ -68,7 +68,6 @@ export default {
   },
   data() {
     return {
-      path: '',
       group: {name: null},
       posts: null,
       groups: null,

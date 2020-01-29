@@ -3,10 +3,6 @@
     <v-dialog v-model="dialog" persistent max-width="290">
       <template v-slot:activator="{ on }">
         <v-btn block tile color="primary" dark v-on="on">
-          <v-list-item-avatar size="20" color="primary">
-            <v-img src="https://scontent.fopo1-1.fna.fbcdn.net/v/t31.0-1/c25.0.100.100a/p100x100/1232980_317180055124740_2248433128634441547_o.jpg?_nc_cat=102&_nc_ohc=hUdr1bIfKMEAX9iQFkO&_nc_ht=scontent.fopo1-1.fna&_nc_tp=1003&oh=0e9cc0ee6c92cb02c5e3903214d4aef3&oe=5EDBA4F3">
-            </v-img>
-          </v-list-item-avatar>
           New Task
         </v-btn>
       </template>
@@ -20,10 +16,17 @@
             @input="$v.title.$touch()"
             @blur="$v.title.$touch()"
           ></v-text-field>
-
+          <v-textarea 
+            class="mr-2"
+            counter
+            outlined
+            v-model="description"
+            label="Description"
+            :rules="rules"
+          ></v-textarea>
           <wm-date @newDate="updateDate($event)"></wm-date>
 
-          <v-btn class="mr-4" @click="submit">submit</v-btn>
+          <v-btn class="primary mr-4" text rounded @click="submit">submit</v-btn>
           <v-btn color="primary darken-1" text @click="dialog = false">Close</v-btn>
         </form>
       </v-card>
@@ -53,6 +56,8 @@
     data: () => ({
       dialog: false,
       title: '',
+      description: '',
+      rules: [v => !!v || 'Description is required.'],
       date: ''
     }),
     computed: {
@@ -65,13 +70,12 @@
     },
     methods: {
       updateDate(updatedDate) {
-        console.log(updatedDate);
-        
         this.date = updatedDate;
       },
       submit () {
         axios.post(this.taskApi, {
             title: this.title,
+            description: this.description,
             date: this.date
         })
             .then(() => { 
@@ -80,9 +84,10 @@
             });
       },
       clear () {
-        this.$v.$reset()
-        this.title = ''
-        this.date = ''
+        this.$v.$reset();
+        this.title = '';
+        this.description = '';
+        this.date = '';
       }
     }
   }
