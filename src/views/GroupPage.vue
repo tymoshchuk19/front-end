@@ -1,5 +1,5 @@
 <template>
-   <div>
+  <div>
     <v-row>
       <v-col cols="1">
         <wm-sidebar></wm-sidebar>
@@ -23,7 +23,7 @@
           </v-col>
           <v-col cols="6">
             <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
-            <v-divider class="mb-2"></v-divider> 
+            <v-divider class="mb-2"></v-divider>
             <wm-posts :posts="posts"></wm-posts>
           </v-col>
           <v-col cols="3" class="secondary">
@@ -38,61 +38,75 @@
 </template>
 
 <script>
-import Posts from '../components/Posts'
-import PostForm from '../components/PostForm'
-import Workum from '../components/Workum'
-import Header from '../components/Header'
-import Signout from '../components/Signout'
-import Tasks from '../components/Tasks'
-import TasksForm from '../components/TasksForm'
-import GroupForm from '../components/GroupForm'
-import Groups from '../components/Groups'
-import { API } from '../../config/config';
-import axios from 'axios';
-import Footer from '../components/Footer'
-import SideBar from '../components/SideBar'
+/*eslint-disable no-console*/
+
+import Posts from "../components/Posts";
+import PostForm from "../components/PostForm";
+import Workum from "../components/Workum";
+import Header from "../components/Header";
+import Signout from "../components/Signout";
+import Tasks from "../components/Tasks";
+import TasksForm from "../components/TasksForm";
+import GroupForm from "../components/GroupForm";
+import Groups from "../components/Groups";
+import { API } from "../../config/config";
+import axios from "axios";
+import Footer from "../components/Footer";
+import SideBar from "../components/SideBar";
 
 export default {
   components: {
-    'wm-posts': Posts,
-    'wm-postform': PostForm,
-    'wm-workum': Workum,
-    'wm-header': Header,
-    'wm-signout': Signout,
-    'wm-tasks': Tasks,
-    'wm-taskform': TasksForm,
-    'wm-groupform': GroupForm,
-    'wm-groups': Groups,
-    'wm-footer': Footer,
-    'wm-sidebar': SideBar
+    "wm-posts": Posts,
+    "wm-postform": PostForm,
+    "wm-workum": Workum,
+    "wm-header": Header,
+    "wm-signout": Signout,
+    "wm-tasks": Tasks,
+    "wm-taskform": TasksForm,
+    "wm-groupform": GroupForm,
+    "wm-groups": Groups,
+    "wm-footer": Footer,
+    "wm-sidebar": SideBar
   },
   data() {
     return {
-      path: '',
-      group: {name: null},
+      path: "",
+      group: { name: null },
       posts: null,
       groups: null,
       tasks: null,
-      postApi: API + 'groups/' + this.$route.params.group_id + '/posts',
-      taskApi: API + 'groups/' + this.$route.params.group_id + '/tasks'
+      postApi: API + "groups/" + this.$route.params.group_id + "/posts",
+      taskApi: API + "groups/" + this.$route.params.group_id + "/tasks"
+    };
+  },
+  watch: {
+    $route: function(to) {
+      console.log(to.params.group_id);
+
+      this.getGroup(to.params.group_id);
+      this.getGroups();
+      this.getPosts(to.params.group_id);
+      this.getTasks(to.params.group_id);
     }
   },
   methods: {
-    getPosts() {
-         axios.get(this.postApi)
-        .then(data => this.posts = data.data.posts);
+    getPosts(group_id) {
+      axios
+        .get(API + "groups/" + group_id + "/posts")
+        .then(data => (this.posts = data.data.posts));
     },
-    getGroup() {
-         axios.get(API +'groups/' + this.$route.params.group_id)
-        .then(data => this.group = data.data);
+    getGroup(group_id) {
+      axios
+        .get(API + "groups/" + group_id)
+        .then(data => (this.group = data.data));
     },
     getGroups() {
-         axios.get(API + 'groups')
-          .then(data => this.groups = data.data);
+      axios.get(API + "groups").then(data => (this.groups = data.data));
     },
-    getTasks() {
-         axios.get(this.taskApi)
-          .then(data => this.tasks = data.data);
+    getTasks(group_id) {
+      axios
+        .get(API + "groups/" + group_id + "/tasks")
+        .then(data => (this.tasks = data.data));
     }
   },
   mounted() {
@@ -101,6 +115,5 @@ export default {
     this.getPosts();
     this.getTasks();
   }
-
-}
+};
 </script>
