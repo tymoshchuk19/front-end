@@ -1,7 +1,7 @@
 <template>
   <v-card class="mb-2">
     <v-list-item three-line>
-      <v-menu v-model="menu" top transition="slide-y-transition" origin="bottom" open-on-hover>
+      <v-menu v-model="menu" top transition="slide-y-transition" origin="bottom">
         <template v-slot:activator="{ on }">
           <v-list-item-avatar v-on="on" size="40" color="primary">
             <img :src="post.posted_by.image" :alt="post.posted_by.nome" />
@@ -38,8 +38,8 @@
         <v-list-item-action-text class="black--text mt-2 body-1">{{post.body}}</v-list-item-action-text>
       </v-list-item-content>
     </v-list-item>
-    <v-card-actions>
-      <v-btn @click="like" class="indigo" text>
+    <v-card-actions class="d-flex flex-row-reverse">
+      <v-btn @click="like" class="indigo" text rounded>
         <span class="white--text text-lowercase mr-2">{{ nlikes }}</span>
         <v-icon v-if="liked" color="white">mdi-thumb-up</v-icon>
         <v-icon v-else color="white">mdi-thumb-up-outline</v-icon>

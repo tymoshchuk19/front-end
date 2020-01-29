@@ -12,7 +12,7 @@ Vue.use(Vuex);
  */
 const state = {
   user: {
-    nome: ""
+    nome: null
   }
 };
 
