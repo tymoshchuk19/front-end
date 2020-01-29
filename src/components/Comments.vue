@@ -1,31 +1,47 @@
 <template>
   <div>
-      <v-card 
-        class="mb-1 ml-5" 
-        v-for="(com,i) in coms"
-        :key="i"
-      >
-        <v-list-item three-line>
-        <v-list-item-avatar size="30" color="primary">
-            <img
-                :src="com.author.image"
-                :alt="com.author.name"
-            >
-        </v-list-item-avatar>
+    <v-card class="mb-1 ml-5" v-for="(com,i) in coms" :key="i">
+      <v-list-item three-line>
+        <v-menu v-model="menu" top transition="slide-y-transition" origin="bottom" open-on-hover>
+          <template v-slot:activator="{ on }">
+            <v-list-item-avatar v-on="on" size="30" color="primary">
+              <img :src="com.author.image" :alt="com.author.nome" />
+            </v-list-item-avatar>
+          </template>
+          <v-card width="280">
+            <v-img :src="com.author.image"></v-img>
+            <v-list class="no-border" dark tile>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>{{com.author.nome}}</v-list-item-title>
+                  <v-list-item-subtitle>{{com.author.email}}</v-list-item-subtitle>
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-btn icon @click="menu = false">
+                    <v-icon>mdi-account-box</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+            </v-list>
+            <v-list-item @click="() => {}">
+              <v-icon class="ma-auto">mdi-message-text</v-icon>
+            </v-list-item>
+          </v-card>
+        </v-menu>
 
         <v-list-item-content>
-            <v-list-item-title class="headline mb-1">{{com.author.nome}}</v-list-item-title>
-            <!-- <v-list-item-subtitle>[{{post.type}}]</v-list-item-subtitle> -->
-            <v-list-item-action-text class="black--text">{{com.body}}</v-list-item-action-text>
+          <v-list-item-title class="headline mb-1">{{com.author.nome}}</v-list-item-title>
+          <v-list-item-subtitle>{{com.fromNow}}</v-list-item-subtitle>
+          <v-list-item-action-text class="black--text">{{com.body}}</v-list-item-action-text>
         </v-list-item-content>
-        </v-list-item>
-        <v-card-actions>
+      </v-list-item>
+      <v-card-actions>
         <v-btn @click="() => {like(com._id)}" class="indigo" text>
-            <span class="white--text text-lowercase mr-2">{{ com.likes.length }}</span>
-            <v-icon v-if="isLiked(i)" color='white'>mdi-thumb-up</v-icon>
-            <v-icon v-else color='white'>mdi-thumb-up-outline</v-icon>
+          <span class="white--text text-lowercase mr-2">{{ com.likes.length }}</span>
+          <v-icon v-if="isLiked(i)" color="white">mdi-thumb-up</v-icon>
+          <v-icon v-else color="white">mdi-thumb-up-outline</v-icon>
         </v-btn>
-        </v-card-actions>
+      </v-card-actions>
     </v-card>
   </div>
 </template>
@@ -33,27 +49,25 @@
 <script>
 /*eslint-disable no-console*/
 import axios from "axios";
-import { USER, API } from '../../config/config';
+import { API } from "../../config/config";
+import { mapState } from "vuex";
 
-
-  export default {
-    props: ['coms', "postid"],
-    data () {
-      return {
-        user:USER
-      }
-    },
-    methods: {
-      like(id) {
-        axios.post(API + 'posts/' + this.postid + '/comments/'+ id + '/like', {user: USER})
+export default {
+  props: ["coms", "postid"],
+  methods: {
+    like(id) {
+      axios
+        .post(API + "posts/" + this.postid + "/comments/" + id + "/like")
         .then(() => {
           this.$emit("newLike");
-        })
-      },
-      isLiked(i) {
-        console.log(this.coms[i]);
-        return this.coms[i].likes.includes(this.user)
-      }
+        });
+    },
+    isLiked(i) {
+      return this.coms[i].likes.includes(this.user._id);
     }
+  },
+  computed: {
+    ...mapState(["user"])
   }
+};
 </script>
