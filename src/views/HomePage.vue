@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-
-    <v-row >
+    <v-row>
       <v-col cols="3">
         <wm-workum></wm-workum>
       </v-col>
@@ -26,7 +25,6 @@
         <wm-tasks :tasks="tasks"></wm-tasks>
       </v-col>
     </v-row>
-    
   </div>
 </template>
 
@@ -43,7 +41,7 @@ import axios from 'axios';
 import GroupForm from '../components/GroupForm'
 
 export default {
-  name: 'home',
+  name: "home",
   components: {
     'wm-posts': Posts,
     'wm-workum': Workum,
@@ -65,8 +63,7 @@ export default {
   },
   methods: {
     getPosts() {
-         axios.get(API +'users/' + USER + '/posts')
-        .then(data => this.posts = data.data);
+      axios.get(API + "/feed").then(data => (this.posts = data.data));
     },
     getGroups() {
          axios.get(API + 'groups')
@@ -76,12 +73,11 @@ export default {
          axios.get(API + 'users/' + USER + '/tasks')
           .then(data => this.tasks = data.data);
     }
-
   },
   mounted() {
     this.getPosts();
     this.getGroups();
     this.getTasks();
   }
-}
+};
 </script>

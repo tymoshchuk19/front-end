@@ -45,21 +45,20 @@
 
 
 <script>
-  import { validationMixin } from 'vuelidate';
-  import { required } from 'vuelidate/lib/validators';
-  import { USER } from '../../config/config';
-  import axios from "axios";
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
+import axios from "axios";
 
-  /*eslint-disable no-console*/
+/*eslint-disable no-console*/
 
-  export default {
-    mixins: [validationMixin],
-    props: ['api'],
-    validations: {
-      title: { required },
-      body: { required },
-      tag: { required }
-    },
+export default {
+  mixins: [validationMixin],
+  props: ["api"],
+  validations: {
+    title: { required },
+    body: { required },
+    tag: { required }
+  },
 
     data: () => ({
       dialog: false,
@@ -69,40 +68,40 @@
       tag: '',
     }),
 
-    computed: {
-      titleErrors () {
-        const errors = []
-        if (!this.$v.title.$dirty) return errors
-        !this.$v.title.required && errors.push('Title is required.')
-        return errors
-      },
-      tagErrors () {
-        const errors = []
-        if (!this.$v.tag.$dirty) return errors
-        return errors
-      }
+  computed: {
+    titleErrors() {
+      const errors = [];
+      if (!this.$v.title.$dirty) return errors;
+      !this.$v.title.required && errors.push("Title is required.");
+      return errors;
     },
+    tagErrors() {
+      const errors = [];
+      if (!this.$v.tag.$dirty) return errors;
+      return errors;
+    }
+  },
 
-    methods: {
-      submit () {
-        axios.post(this.api , {
-          posted_by: USER,
+  methods: {
+    submit() {
+      axios
+        .post(this.api, {
           title: this.title,
           body: this.body,
-          tags: [this.tag]
+          tags: this.tag ? [this.tag] : []
         })
         .then(() => { 
           this.dialog = false;
           this.$emit('newPost'); 
           this.clear()
         });
-      },
-      clear () {
-        this.$v.$reset()
-        this.title = ''
-        this.body = ''
-        this.tag = ''
-      },
+    },
+    clear() {
+      this.$v.$reset();
+      this.title = "";
+      this.body = "";
+      this.tag = "";
     }
   }
+};
 </script>
