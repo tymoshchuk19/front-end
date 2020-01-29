@@ -110,10 +110,10 @@ export default {
     }
   },
   mounted() {
-    this.getGroup();
+    this.getGroup(this.$route.params.group_id);
     this.getGroups();
-    this.getPosts();
-    this.getTasks();
+    this.getPosts(this.$route.params.group_id);
+    this.getTasks(this.$route.params.group_id);
   }
 };
 </script>
