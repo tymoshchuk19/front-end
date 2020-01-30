@@ -4,6 +4,7 @@
       <div class="d-flex align-center">
         <v-toolbar-title>Place holder</v-toolbar-title>
       </div>
+      <wm-searchbar />
 
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -57,6 +58,7 @@ import GroupForm from "../components/GroupForm";
 import Footer from "../components/Footer";
 import FriendsList from "../components/FriendsList";
 import SideBar from "../components/SideBar";
+import SearchBar from "../components/SearchBar";
 import { API } from "../../config/config";
 import axios from "axios";
 import { mapState } from "vuex";
@@ -74,7 +76,8 @@ export default {
     "wm-groupform": GroupForm,
     "wm-footer": Footer,
     "wm-sidebar": SideBar,
-    "wm-friendslist": FriendsList
+    "wm-friendslist": FriendsList,
+    "wm-searchbar": SearchBar
   },
   data() {
     return {
