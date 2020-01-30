@@ -4,6 +4,7 @@ import HomePage from "../views/HomePage.vue";
 import GroupPage from "../views/GroupPage.vue";
 import LoginPage from "../views/LoginPage.vue";
 import RegisterPage from "../views/RegisterPage.vue";
+import ProfilePage from "../views/ProfilePage.vue";
 // import axios from "axios";
 // import { API } from "../../config/config";
 import store from "../store";
@@ -15,6 +16,11 @@ const routes = [
     path: "/",
     name: "home",
     component: HomePage
+  },
+  {
+    path: "/users/:user_id",
+    name: "profile",
+    component: ProfilePage
   },
   {
     path: "/groups/:group_id",

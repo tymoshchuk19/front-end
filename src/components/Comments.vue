@@ -56,7 +56,7 @@ export default {
   props: ["coms", "postid"],
   data: () => {
     return {
-      // menu: false
+      //menu: false
     };
   },
   methods: {

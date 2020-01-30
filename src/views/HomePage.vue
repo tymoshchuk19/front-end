@@ -3,46 +3,41 @@
     <v-app-bar app color="indigo darken-2" dark dense>
       <div class="d-flex align-center">
         <v-toolbar-title>Place holder</v-toolbar-title>
-      </div>
-      <wm-searchbar />
-
+      </div><<<<<<< HEAD
+      <wm-searchbar />=======
+      >>>>>>> 80e448087ef89884309b1c78f71748aa04a019b6
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-row>
-      <v-col cols="1">
-        <wm-sidebar></wm-sidebar>
+      <v-col cols="3">
+        <router-link :to="{ path: '/users/5e2084242c27784f03a9fd83' }">
+          <v-btn text>Ricardo Canela</v-btn>
+        </router-link>
+        <wm-workum></wm-workum>
       </v-col>
-      <v-col cols="11">
-        <v-row>
-          <v-col cols="3">
-            <wm-workum></wm-workum>
-          </v-col>
-          <v-col cols="6">
-            <wm-header :name="user.nome"></wm-header>
-          </v-col>
-          <v-col cols="3">
-            <wm-signout></wm-signout>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="3" class="secondary">
-            <wm-groupform @newGroup="getGroups"></wm-groupform>
-            <wm-groups :groups="groups"></wm-groups>
-          </v-col>
-          <v-col cols="6" class="secondary">
-            <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
-            <wm-posts :posts="posts"></wm-posts>
-          </v-col>
-          <v-col cols="3" class="secondary">
-            <wm-tasks :tasks="tasks"></wm-tasks>
-            <br />
-            <wm-friendslist></wm-friendslist>
-          </v-col>
-        </v-row>
+      <v-col cols="6">
+        <wm-header :name="user.nome"></wm-header>
+      </v-col>
+      <v-col cols="3">
+        <wm-signout></wm-signout>
       </v-col>
     </v-row>
-    <wm-footer></wm-footer>
+    <v-row>
+      <v-col cols="3" class="secondary">
+        <wm-groupform @newGroup="getGroups"></wm-groupform>
+        <wm-groups :groups="groups"></wm-groups>
+      </v-col>
+      <v-col cols="6" class="secondary">
+        <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
+        <wm-posts :posts="posts"></wm-posts>
+      </v-col>
+      <v-col cols="3" class="secondary">
+        <wm-tasks :tasks="tasks"></wm-tasks>
+        <br />
+        <wm-friendslist></wm-friendslist>
+      </v-col>
+    </v-row>
+    <!-- <wm-footer></wm-footer> -->
   </div>
 </template>
 
@@ -77,7 +72,9 @@ export default {
     "wm-footer": Footer,
     "wm-sidebar": SideBar,
     "wm-friendslist": FriendsList,
-    "wm-searchbar": SearchBar
+    "wm-searchbar": SearchBar,
+    "wm-footer": Footer,
+    "wm-friendslist": FriendsList
   },
   data() {
     return {
@@ -89,7 +86,7 @@ export default {
   },
   methods: {
     getPosts() {
-      axios.get(API + "/feed").then(data => (this.posts = data.data));
+      axios.get(API + "feed").then(data => (this.posts = data.data));
     },
     getGroups() {
       axios.get(API + "my/groups").then(data => (this.groups = data.data));

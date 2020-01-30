@@ -1,45 +1,51 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="1">
-        <wm-sidebar></wm-sidebar>
+      <v-col cols="3">
+        <wm-workum></wm-workum>
       </v-col>
-      <v-col cols="11">
-        <v-row>
-          <v-col cols="2">
-            <wm-workum></wm-workum>
-          </v-col>
-          <v-col cols="6">
-            <wm-header :name="group.name"></wm-header>
-          </v-col>
-          <v-col cols="3">
-            <wm-signout></wm-signout>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="2" class="secondary">
-            <v-row>
-              <wm-groupform @newGroup="getGroups"></wm-groupform>
-              <wm-groups :groups="groups"></wm-groups>
-            </v-row>
-            <v-row>
-              <v-text-field type="text" v-model="search" filled label="Group member" clearable></v-text-field>
-              <wm-members :members="filteredMembers"></wm-members>
-            </v-row>
-          </v-col>
-          <v-col cols="6">
-            <wm-postform :api="postApi" @newPost="() => getPosts($route.params.group_id)"></wm-postform>
-            <v-divider class="mb-2"></v-divider>
-            <wm-posts :posts="posts"></wm-posts>
-          </v-col>
-          <v-col cols="3" class="secondary">
-            <wm-taskform @newTask="() => getTasks(group_id)" :taskApi="taskApi"></wm-taskform>
-            <wm-tasks :tasks="tasks"></wm-tasks>
-          </v-col>
-        </v-row>
+      <v-col cols="6">
+        <wm-header :name="group.name"></wm-header>
+      </v-col>
+      <v-col cols="3">
+        <wm-signout></wm-signout>
       </v-col>
     </v-row>
-    <wm-footer></wm-footer>
+    <v-row>
+      <v-col cols="3" class="secondary">
+        <v-row>
+          <wm-groupform @newGroup="getGroups"></wm-groupform>
+        </v-row>
+        <v-row>
+          <wm-groups :groups="groups"></wm-groups>
+        </v-row>
+        <v-divider></v-divider>
+        <v-text-field type="text" v-model="newmember" filled label="Find friend" clearable></v-text-field>
+        <wm-newmembers 
+          @newMember="() => getMembers()"
+          :friends="filteredFriends" 
+          :perms="admin" 
+          :group="group_id">
+        </wm-newmembers>
+        <v-divider></v-divider>
+        <v-text-field type="text" v-model="search" filled label="Group member" clearable></v-text-field>
+        <wm-members :members="filteredMembers"></wm-members>
+      </v-col>
+      <v-col cols="6">
+        <wm-postform :api="postApi" @newPost="() => getPosts($route.params.group_id)"></wm-postform>
+        <v-divider class="mb-2"></v-divider>
+        <wm-posts :posts="posts"></wm-posts>
+      </v-col>
+      <v-col cols="3" class="secondary">
+        <wm-taskform 
+          v-if="admin"
+          @newTask="() => getTasks(group_id)" 
+          :taskApi="taskApi">
+        </wm-taskform>
+        <wm-tasks :tasks="tasks" :perms="admin" @newTask="() => getTasks(group_id)"></wm-tasks>
+      </v-col>
+    </v-row>
+    <!-- <wm-footer></wm-footer> -->
   </div>
 </template>
 
@@ -57,9 +63,10 @@ import GroupForm from "../components/GroupForm";
 import Groups from "../components/Groups";
 import { API } from "../../config/config";
 import axios from "axios";
-import Footer from "../components/Footer";
-import SideBar from "../components/SideBar";
+//import Footer from "../components/Footer";
 import Members from "../components/Members";
+import NewMember from "../components/NewMember";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -72,15 +79,17 @@ export default {
     "wm-taskform": TasksForm,
     "wm-groupform": GroupForm,
     "wm-groups": Groups,
-    "wm-footer": Footer,
-    "wm-sidebar": SideBar,
-    "wm-members": Members
+    //"wm-footer": Footer,
+    "wm-members": Members,
+    "wm-newmembers": NewMember
   },
   data() {
     return {
+      admin: false,
       path: "",
       search: "",
       members: "",
+      newmember: "",
       group: { name: null },
       posts: null,
       groups: null,
@@ -92,8 +101,6 @@ export default {
   },
   watch: {
     $route: function(to) {
-      console.log(to.params.group_id);
-
       this.group_id = to.params.group_id;
       this.taskApi = API + "groups/" + to.params.group_id + "/tasks";
       this.postApi = API + "groups/" + to.params.group_id + "/posts";
@@ -112,15 +119,20 @@ export default {
     getGroup(group_id) {
       axios
         .get(API + "groups/" + group_id)
-        .then(data => (this.group = data.data));
+        .then(data => {
+          (this.group = data.data);
+          this.admin = this.group.users.find(obj => {
+                  return (obj.user._id === this.user._id && obj.role === 'admin');
+                });
+        });
     },
     getGroups() {
       axios.get(API + "my/groups").then(data => (this.groups = data.data));
     },
     getMembers() {
-      axios.get(API + "groups/" + this.group_id + "/members").then(data => {
-        this.members = data.data;
-        console.log(data.data);
+      axios.get(API + "groups/" + this.group_id + "/members")
+        .then(data => {
+          this.members = data.data;
       });
     },
     getTasks(group_id) {
@@ -137,11 +149,17 @@ export default {
     this.getTasks(this.$route.params.group_id);
   },
   computed: {
-    filteredMembers: function() {
-      return this.members.filter(member => {
-        return member.user.nome.match(this.search);
-      });
+        filteredMembers: function(){
+            return this.members.filter((member) => {
+                return member.user.nome.match(this.search);
+            });
+        },
+        filteredFriends: function(){
+            return this.user.friends.filter((friend) => {
+                return friend.nome.match(this.newmember);
+            });
+        },
+        ...mapState(["user"])
     }
-  }
 };
 </script>
