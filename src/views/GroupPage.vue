@@ -19,7 +19,7 @@
         <v-row>
           <v-col cols="2" class="secondary">
             <wm-groupform @newGroup="getGroups"></wm-groupform>
-            <wm-groups :groups="groups" ></wm-groups>
+            <wm-groups :groups="groups"></wm-groups>
           </v-col>
           <v-col cols="6">
             <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
@@ -85,7 +85,7 @@ export default {
       console.log(to.params.group_id);
 
       this.group_id = to.params.group_id;
-      this.taskApi = API + "groups/" + to.params.group_id + "/tasks"
+      this.taskApi = API + "groups/" + to.params.group_id + "/tasks";
 
       this.getGroup(to.params.group_id);
       this.getGroups();
@@ -105,7 +105,7 @@ export default {
         .then(data => (this.group = data.data));
     },
     getGroups() {
-      axios.get(API + "groups").then(data => (this.groups = data.data));
+      axios.get(API + "my/groups").then(data => (this.groups = data.data));
     },
     getTasks(group_id) {
       axios
