@@ -1,5 +1,5 @@
 <template>
-  <div class="home">   
+  <div class="home">
     <v-row>
       <v-col cols="1">
         <wm-sidebar></wm-sidebar>
@@ -37,53 +37,53 @@
 </template>
 
 <script>
-import Posts from '../components/Posts'
-import Workum from '../components/Workum'
-import Tasks from '../components/Tasks'
-import Header from '../components/Header'
-import Groups from '../components/Groups'
-import Signout from '../components/Signout'
-import PostForm from '../components/PostForm'
-import GroupForm from '../components/GroupForm'
-import Footer from '../components/Footer'
-import SideBar from '../components/SideBar'
-import { USER, API } from '../../config/config';
-import axios from 'axios';
+import Posts from "../components/Posts";
+import Workum from "../components/Workum";
+import Tasks from "../components/Tasks";
+import Header from "../components/Header";
+import Groups from "../components/Groups";
+import Signout from "../components/Signout";
+import PostForm from "../components/PostForm";
+import GroupForm from "../components/GroupForm";
+import Footer from "../components/Footer";
+import SideBar from "../components/SideBar";
+import { USER, API } from "../../config/config";
+import axios from "axios";
 import { mapState } from "vuex";
 
 export default {
   name: "home",
   components: {
-    'wm-posts': Posts,
-    'wm-workum': Workum,
-    'wm-tasks': Tasks,
-    'wm-header': Header,
-    'wm-groups': Groups,
-    'wm-signout': Signout,
-    'wm-postform': PostForm,
-    'wm-groupform': GroupForm,
-    'wm-footer': Footer,
-    'wm-sidebar': SideBar
+    "wm-posts": Posts,
+    "wm-workum": Workum,
+    "wm-tasks": Tasks,
+    "wm-header": Header,
+    "wm-groups": Groups,
+    "wm-signout": Signout,
+    "wm-postform": PostForm,
+    "wm-groupform": GroupForm,
+    "wm-footer": Footer,
+    "wm-sidebar": SideBar
   },
   data() {
     return {
       posts: null,
       groups: null,
       tasks: null,
-      postApi: API + 'posts'
-    }
+      postApi: API + "posts"
+    };
   },
   methods: {
     getPosts() {
       axios.get(API + "/feed").then(data => (this.posts = data.data));
     },
     getGroups() {
-         axios.get(API + 'groups')
-          .then(data => this.groups = data.data);
+      axios.get(API + "my/groups").then(data => (this.groups = data.data));
     },
     getTasks() {
-         axios.get(API + 'users/' + USER + '/tasks')
-          .then(data => this.tasks = data.data);
+      axios
+        .get(API + "users/" + USER + "/tasks")
+        .then(data => (this.tasks = data.data));
     }
   },
   mounted() {
