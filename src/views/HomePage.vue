@@ -1,38 +1,38 @@
 <template>
   <div class="home">
+    <v-app-bar app color="indigo darken-2" dark dense>
+      <div class="d-flex align-center">
+        <v-toolbar-title>Place holder</v-toolbar-title>
+      </div>
+      <v-spacer></v-spacer>
+    </v-app-bar>
     <v-row>
-      <v-col cols="1">
-        <wm-sidebar></wm-sidebar>
+      <v-col cols="3">
+        <wm-workum></wm-workum>
       </v-col>
-      <v-col cols="11">
-        <v-row>
-          <v-col cols="3">
-            <wm-workum></wm-workum>
-          </v-col>
-          <v-col cols="6">
-            <wm-header :name="user.nome"></wm-header>
-          </v-col>
-          <v-col cols="3">
-            <wm-signout></wm-signout>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="3" class="secondary">
-            <wm-groupform @newGroup="getGroups"></wm-groupform>
-            <wm-groups :groups="groups"></wm-groups>
-          </v-col>
-          <v-col cols="6" class="secondary">
-            <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
-            <wm-posts :posts="posts"></wm-posts>
-          </v-col>
-          <v-col cols="3" class="secondary">
-            <wm-tasks :tasks="tasks"></wm-tasks>
-          </v-col>
-        </v-row>
+      <v-col cols="6">
+        <wm-header :name="user.nome"></wm-header>
+      </v-col>
+      <v-col cols="3">
+        <wm-signout></wm-signout>
       </v-col>
     </v-row>
-    <wm-footer></wm-footer>
+    <v-row>
+      <v-col cols="3" class="secondary">
+        <wm-groupform @newGroup="getGroups"></wm-groupform>
+        <wm-groups :groups="groups"></wm-groups>
+      </v-col>
+      <v-col cols="6" class="secondary">
+        <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
+        <wm-posts :posts="posts"></wm-posts>
+      </v-col>
+      <v-col cols="3" class="secondary">
+        <wm-tasks :tasks="tasks"></wm-tasks>
+        <br />
+        <wm-friendslist></wm-friendslist>
+      </v-col>
+    </v-row>
+    <!-- <wm-footer></wm-footer> -->
   </div>
 </template>
 
@@ -45,9 +45,9 @@ import Groups from "../components/Groups";
 import Signout from "../components/Signout";
 import PostForm from "../components/PostForm";
 import GroupForm from "../components/GroupForm";
-import Footer from "../components/Footer";
-import SideBar from "../components/SideBar";
-import { USER, API } from "../../config/config";
+//import Footer from "../components/Footer";
+import FriendsList from "../components/FriendsList";
+import { API } from "../../config/config";
 import axios from "axios";
 import { mapState } from "vuex";
 
@@ -62,8 +62,8 @@ export default {
     "wm-signout": Signout,
     "wm-postform": PostForm,
     "wm-groupform": GroupForm,
-    "wm-footer": Footer,
-    "wm-sidebar": SideBar
+    //"wm-footer": Footer,
+    "wm-friendslist": FriendsList
   },
   data() {
     return {
@@ -82,7 +82,7 @@ export default {
     },
     getTasks() {
       axios
-        .get(API + "users/" + USER + "/tasks")
+        .get(API + "users/" + this.user._id + "/tasks")
         .then(data => (this.tasks = data.data));
     }
   },
