@@ -1,5 +1,12 @@
 <template>
   <div class="home">
+    <v-app-bar app color="indigo darken-2" dark dense>
+      <div class="d-flex align-center">
+        <v-toolbar-title>Place holder</v-toolbar-title>
+      </div>
+
+      <v-spacer></v-spacer>
+    </v-app-bar>
     <v-row>
       <v-col cols="1">
         <wm-sidebar></wm-sidebar>
@@ -29,15 +36,7 @@
           <v-col cols="3" class="secondary">
             <wm-tasks :tasks="tasks"></wm-tasks>
             <br />
-            <v-card v-for="friend in user.friends" v-bind:key="friend._id" class="mt-1">
-              <v-list-item>
-                <v-list-item-avatar size="10" color="green"></v-list-item-avatar>
-                <v-list-item-avatar color="grey">
-                  <img :src="friend.image" />
-                </v-list-item-avatar>
-                <v-list-item>{{friend.nome}}</v-list-item>
-              </v-list-item>
-            </v-card>
+            <wm-friendslist></wm-friendslist>
           </v-col>
         </v-row>
       </v-col>
@@ -56,8 +55,9 @@ import Signout from "../components/Signout";
 import PostForm from "../components/PostForm";
 import GroupForm from "../components/GroupForm";
 import Footer from "../components/Footer";
+import FriendsList from "../components/FriendsList";
 import SideBar from "../components/SideBar";
-import { USER, API } from "../../config/config";
+import { API } from "../../config/config";
 import axios from "axios";
 import { mapState } from "vuex";
 
@@ -73,7 +73,8 @@ export default {
     "wm-postform": PostForm,
     "wm-groupform": GroupForm,
     "wm-footer": Footer,
-    "wm-sidebar": SideBar
+    "wm-sidebar": SideBar,
+    "wm-friendslist": FriendsList
   },
   data() {
     return {
@@ -92,7 +93,7 @@ export default {
     },
     getTasks() {
       axios
-        .get(API + "users/" + USER + "/tasks")
+        .get(API + "users/" + this.user._id + "/tasks")
         .then(data => (this.tasks = data.data));
     }
   },

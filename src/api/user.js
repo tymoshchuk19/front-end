@@ -6,5 +6,8 @@ export default {
     return axios
       .post(`${API}login`, { email, password })
       .then(({ data }) => data);
+  },
+  getUser() {
+    return axios.get(`${API}user/auth`).then(({ data }) => data);
   }
 };

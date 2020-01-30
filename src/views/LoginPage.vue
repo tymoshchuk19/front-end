@@ -48,8 +48,8 @@ export default {
   data() {
     return {
       show1: false,
-      email: "titi@uminho.com",
-      password: "19",
+      email: "pg41089@alunos.uminho.pt",
+      password: "1",
       rules: {
         required: value => !!value || "Required.",
         min: v => v.length >= 8 || "Min 8 characters",

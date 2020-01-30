@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Vue from "vue";
 import Vuex from "vuex";
 import user from "../api/user";
@@ -44,12 +45,21 @@ const actions = {
   async setUser({ commit }, { email, password }) {
     const currentUser = await user.login(email, password);
     commit("setUser", { user: currentUser });
+  },
+  async getUser({ commit }) {
+    const currentUser = await user.getUser();
+    console.log(currentUser);
+
+    commit("setUser", { user: currentUser });
   }
 };
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state,
   getters,
   mutations,
   actions
 });
+export default store;
+
+setInterval(() => store.dispatch("getUser"), 5000);
