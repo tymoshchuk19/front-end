@@ -1,37 +1,33 @@
 <template>
-  <div class="home">
+  <div>
     <v-app-bar app color="indigo darken-2" dark dense>
       <div class="d-flex align-center">
-        <v-toolbar-title>Place holder</v-toolbar-title>
+        <v-toolbar-title>WorkuM</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-row>
       <v-col cols="3">
-        <router-link :to="{ path: '/users/5e2084242c27784f03a9fd83' }">
-          <v-btn text>Ricardo Canela</v-btn>
-        </router-link>
         <wm-workum></wm-workum>
       </v-col>
       <v-col cols="6">
-        <wm-header :name="user.nome"></wm-header>
+        <wm-header :name="userprofile.nome"></wm-header>
       </v-col>
       <v-col cols="3">
         <wm-signout></wm-signout>
+        <v-btn text @click="addFriend">Add friend</v-btn>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="3" class="secondary">
-        <wm-groupform @newGroup="getGroups"></wm-groupform>
         <wm-groups :groups="groups"></wm-groups>
       </v-col>
       <v-col cols="6" class="secondary">
-        <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
         <wm-posts :posts="posts"></wm-posts>
       </v-col>
       <v-col cols="3" class="secondary">
         <wm-tasks :tasks="tasks"></wm-tasks>
-        <br />
+        <br/>
         <wm-friendslist></wm-friendslist>
       </v-col>
     </v-row>
@@ -40,14 +36,13 @@
 </template>
 
 <script>
+/*eslint-disable no-console*/
 import Posts from "../components/Posts";
 import Workum from "../components/Workum";
 import Tasks from "../components/Tasks";
 import Header from "../components/Header";
 import Groups from "../components/Groups";
 import Signout from "../components/Signout";
-import PostForm from "../components/PostForm";
-import GroupForm from "../components/GroupForm";
 //import Footer from "../components/Footer";
 import FriendsList from "../components/FriendsList";
 import { API } from "../../config/config";
@@ -55,7 +50,6 @@ import axios from "axios";
 import { mapState } from "vuex";
 
 export default {
-  name: "home",
   components: {
     "wm-posts": Posts,
     "wm-workum": Workum,
@@ -63,13 +57,12 @@ export default {
     "wm-header": Header,
     "wm-groups": Groups,
     "wm-signout": Signout,
-    "wm-postform": PostForm,
-    "wm-groupform": GroupForm,
     //"wm-footer": Footer,
     "wm-friendslist": FriendsList
   },
   data() {
     return {
+      userprofile: null,
       posts: null,
       groups: null,
       tasks: null,
@@ -77,6 +70,9 @@ export default {
     };
   },
   methods: {
+    getUserProfile() {
+      axios.get(API + "users/" + this.$route.params.user_id ).then(data => this.userprofile = data.data);
+    },
     getPosts() {
       axios.get(API + "feed").then(data => (this.posts = data.data));
     },
@@ -87,9 +83,17 @@ export default {
       axios
         .get(API + "users/" + this.user._id + "/tasks")
         .then(data => (this.tasks = data.data));
+    },
+    addFriend() {
+      axios
+        .post(API + "users/" + this.userprofile._id + "/request",{
+            
+        })
+        .then(() => console.log('request sended'));
     }
   },
   mounted() {
+    this.getUserProfile();
     this.getPosts();
     this.getGroups();
     this.getTasks();
