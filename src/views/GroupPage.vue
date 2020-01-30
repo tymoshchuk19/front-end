@@ -39,7 +39,10 @@
             <wm-posts :posts="posts"></wm-posts>
           </v-col>
           <v-col cols="3" class="secondary">
-            <wm-taskform @newTask="() => getTasks(group_id)" :taskApi="taskApi"></wm-taskform>
+            <wm-taskform 
+              @newTask="() => getTasks(group_id)" 
+              :taskApi="taskApi">
+            </wm-taskform>
             <wm-tasks :tasks="tasks"></wm-tasks>
           </v-col>
         </v-row>
@@ -66,6 +69,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import SideBar from "../components/SideBar";
 import Members from "../components/Members";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -84,6 +88,7 @@ export default {
   },
   data() {
     return {
+      admins: "",
       path: "",
       search: "",
       members: "",
@@ -98,8 +103,6 @@ export default {
   },
   watch: {
     $route: function(to) {
-      console.log(to.params.group_id);
-
       this.group_id = to.params.group_id;
       this.taskApi = API + "groups/" + to.params.group_id + "/tasks";
 
@@ -118,7 +121,14 @@ export default {
     getGroup(group_id) {
       axios
         .get(API + "groups/" + group_id)
-        .then(data => (this.group = data.data));
+        .then(data => {
+          (this.group = data.data);
+          /*this.admins = this.group.users.filter(user => {
+                  console.log(user.user);
+                  return user.user.str.match(this.user._id);
+                });
+          console.log('/-----/'+ this.admins);*/
+        });
     },
     getGroups() {
       axios.get(API + "my/groups").then(data => (this.groups = data.data));
@@ -146,6 +156,8 @@ export default {
                 return member.user.nome.match(this.search);
             });
         }
+        ,
+        ...mapState(["user"])
     }
 };
 </script>
