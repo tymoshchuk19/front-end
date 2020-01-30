@@ -17,9 +17,7 @@
             </div>
             <v-footer color>
               <v-btn class="ml-3" icon color="primary">
-                <v-icon class="mr-3" size="37" color="primary"
-                  >mdi-plus-circle</v-icon
-                >
+                <v-icon class="mr-3" size="37" color="primary">mdi-plus-circle</v-icon>
               </v-btn>
               <v-text-field
                 v-model="message"
@@ -30,12 +28,7 @@
                 placeholder="Escreve uma mensagem"
                 v-on:keyup.enter="postMessage(message)"
               ></v-text-field>
-              <v-btn
-                class="ml-3"
-                icon
-                color="primary"
-                v-on:click="postMessage(message)"
-              >
+              <v-btn class="ml-3" icon color="primary" v-on:click="postMessage(message)">
                 <v-icon size="37">mdi-send-circle</v-icon>
               </v-btn>
             </v-footer>
@@ -149,9 +142,9 @@ export default {
   overflow-y: scroll;
 }
 
-html {
+/* html {
   overflow-y: hidden;
-}
+} */
 
 body {
   height: 100vh;

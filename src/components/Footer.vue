@@ -21,6 +21,17 @@
         <v-icon>mdi-chat</v-icon>-->
       </v-col>
     </v-footer>
+    <v-bottom-sheet v-model="chat" fullscreen>
+      <template v-slot:activator="{ on }">
+        <v-btn v-on="on" text>
+          <strong>Chat</strong>
+          <v-icon>mdi-chat</v-icon>
+        </v-btn>
+      </template>
+      <v-btn class="mt-12" flat color="error" @click="chat = !chat">close</v-btn>
+
+      <Chat />
+    </v-bottom-sheet>
   </div>
 </template>
 
