@@ -7,6 +7,7 @@
     <v-row justify="center">
       <form>
         <v-text-field
+          placeholder="example@email.com"
           v-model="email"
           label="Email"
           required
@@ -14,6 +15,7 @@
           @blur="$v.email.$touch()"
         ></v-text-field>
         <v-text-field
+          placeholder="*******"
           v-model="password"
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
           :rules="[rules.required, rules.min]"
@@ -48,8 +50,8 @@ export default {
   data() {
     return {
       show1: false,
-      email: "pg41089@alunos.uminho.pt",
-      password: "1",
+      email: "",
+      password: "",
       rules: {
         required: value => !!value || "Required.",
         min: v => v.length >= 8 || "Min 8 characters",

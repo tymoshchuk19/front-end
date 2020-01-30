@@ -28,7 +28,7 @@
           <wm-groups :groups="groups"></wm-groups>
         </v-row>
         <v-divider></v-divider>
-        <v-text-field type="text" v-model="newmember" filled label="Find friend" clearable></v-text-field>
+        <v-text-field type="text" v-model="newmember" filled label="Add member" clearable></v-text-field>
         <wm-newmembers
           @newMember="() => getMembers()"
           :friends="filteredFriends"
@@ -49,7 +49,7 @@
         <wm-tasks :tasks="tasks" :perms="admin" @newTask="() => getTasks(group_id)"></wm-tasks>
       </v-col>
     </v-row>
-    <!-- <wm-footer></wm-footer> -->
+    <wm-footer></wm-footer>
   </div>
 </template>
 
@@ -69,7 +69,7 @@ import SearchBar from "../components/SearchBar";
 
 import { API } from "../../config/config";
 import axios from "axios";
-//import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 import Members from "../components/Members";
 import NewMember from "../components/NewMember";
 import { mapState } from "vuex";
@@ -85,7 +85,7 @@ export default {
     "wm-taskform": TasksForm,
     "wm-groupform": GroupForm,
     "wm-groups": Groups,
-    //"wm-footer": Footer,
+    "wm-footer": Footer,
     "wm-members": Members,
     "wm-newmembers": NewMember,
     "wm-searchbar": SearchBar

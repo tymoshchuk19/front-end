@@ -23,13 +23,13 @@
     </v-row>
     <v-row>
       <v-col cols="3" class="secondary">
-        <wm-groups :groups="groups"></wm-groups>
+        <wm-groups v-if="mates" :groups="groups"></wm-groups>
       </v-col>
       <v-col cols="6" class="secondary">
-        <wm-posts :posts="posts"></wm-posts>
+        <wm-posts v-if="mates" :posts="posts"></wm-posts>
       </v-col>
       <v-col cols="3" class="secondary">
-        <wm-tasks :tasks="tasks"></wm-tasks>
+        <wm-tasks v-if="mates" :tasks="tasks"></wm-tasks>
         <br />
         <wm-friendslist></wm-friendslist>
       </v-col>
