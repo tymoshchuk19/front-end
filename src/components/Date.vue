@@ -12,7 +12,7 @@
           <template v-slot:activator="{ on }">
             <v-text-field
               v-model="dateFormatted"
-              label="Date"
+              :label="datename"
               hint="MM/DD/YYYY format"
               persistent-hint
               prepend-icon="mdi-calendar-today"
@@ -28,6 +28,7 @@
 <script>
 /*eslint-disable no-console*/
   export default {
+    props: ['datename'],
     data: vm => ({
       date: new Date().toISOString().substr(0, 10),
       dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),

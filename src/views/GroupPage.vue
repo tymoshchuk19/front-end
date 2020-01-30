@@ -18,8 +18,20 @@
         </v-row>
         <v-row>
           <v-col cols="2" class="secondary">
-            <wm-groupform @newGroup="getGroups"></wm-groupform>
-            <wm-groups :groups="groups" ></wm-groups>
+            <v-row>
+              <wm-groupform @newGroup="getGroups"></wm-groupform>
+              <wm-groups :groups="groups" ></wm-groups>
+            </v-row>
+            <v-row>
+              <v-text-field 
+                type="text"
+                v-model="search"
+                filled
+                label="Group member"
+                clearable
+              ></v-text-field>
+              <wm-members :members="filteredMembers"></wm-members>
+            </v-row>
           </v-col>
           <v-col cols="6">
             <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
@@ -53,6 +65,7 @@ import { API } from "../../config/config";
 import axios from "axios";
 import Footer from "../components/Footer";
 import SideBar from "../components/SideBar";
+import Members from "../components/Members";
 
 export default {
   components: {
@@ -66,11 +79,14 @@ export default {
     "wm-groupform": GroupForm,
     "wm-groups": Groups,
     "wm-footer": Footer,
-    "wm-sidebar": SideBar
+    "wm-sidebar": SideBar,
+    "wm-members": Members
   },
   data() {
     return {
       path: "",
+      search: "",
+      members: "",
       group: { name: null },
       posts: null,
       groups: null,
@@ -107,6 +123,10 @@ export default {
     getGroups() {
       axios.get(API + "groups").then(data => (this.groups = data.data));
     },
+    getMembers() {
+      axios.get(API + "groups/"+ this.group_id +"/members")
+      .then(data => {this.members = data.data;console.log(data.data);});
+    },
     getTasks(group_id) {
       axios
         .get(API + "groups/" + group_id + "/tasks")
@@ -116,8 +136,16 @@ export default {
   mounted() {
     this.getGroup(this.$route.params.group_id);
     this.getGroups();
+    this.getMembers();
     this.getPosts(this.$route.params.group_id);
     this.getTasks(this.$route.params.group_id);
-  }
+  },
+  computed: {
+        filteredMembers: function(){
+            return this.members.filter((member) => {
+                return member.user.nome.match(this.search);
+            });
+        }
+    }
 };
 </script>

@@ -30,7 +30,7 @@
                 v-model="tags"
                 chips
                 deletable-chips
-                label="Localização"
+                label="Tags"
             >
           </v-combobox>
 

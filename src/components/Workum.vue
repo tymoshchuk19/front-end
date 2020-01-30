@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 class="text-center primary--text">W<span class="font-weight-light">orku</span>M</h1>
+    <router-link :to="{ path: '/'}">
+      <h1 class="text-center primary--text">W<span class="font-weight-light">orku</span>M</h1>
+     </router-link>
   </div>
 </template>
 

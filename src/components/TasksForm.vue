@@ -24,7 +24,7 @@
             label="Description"
             :rules="rules"
           ></v-textarea>
-          <wm-date @newDate="updateDate($event)"></wm-date>
+          <wm-date @newDate="updateDate($event)" :datename="'Expiration Date'"></wm-date>
 
           <v-btn class="primary mr-4" text rounded @click="submit">submit</v-btn>
           <v-btn color="primary darken-1" text @click="dialog = false">Close</v-btn>
