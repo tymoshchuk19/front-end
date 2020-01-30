@@ -28,6 +28,16 @@
           </v-col>
           <v-col cols="3" class="secondary">
             <wm-tasks :tasks="tasks"></wm-tasks>
+            <br />
+            <v-card v-for="friend in user.friends" v-bind:key="friend._id" class="mt-1">
+              <v-list-item>
+                <v-list-item-avatar size="10" color="green"></v-list-item-avatar>
+                <v-list-item-avatar color="grey">
+                  <img :src="friend.image" />
+                </v-list-item-avatar>
+                <v-list-item>{{friend.nome}}</v-list-item>
+              </v-list-item>
+            </v-card>
           </v-col>
         </v-row>
       </v-col>

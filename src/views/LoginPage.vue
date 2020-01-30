@@ -30,9 +30,7 @@
     <v-row justify="center">
       <v-col cols="2">
         <router-link :to="{ path: '/register' }">
-          <v-btn block tile small outlined color="primary" dark >
-            Register
-          </v-btn>
+          <v-btn block tile small outlined color="primary" dark>Register</v-btn>
         </router-link>
       </v-col>
     </v-row>
@@ -41,22 +39,22 @@
 
 <script>
 import { mapActions } from "vuex";
-import Workum from '../components/Workum'
+import Workum from "../components/Workum";
 
 export default {
   components: {
-    'wm-workum': Workum
+    "wm-workum": Workum
   },
   data() {
     return {
       show1: false,
-      email: "example@alunos.uminho.pt",
-      password: "******",
+      email: "titi@uminho.com",
+      password: "19",
       rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 8 || 'Min 8 characters',
-          emailMatch: () => ('The email and password you entered don\'t match'),
-        }
+        required: value => !!value || "Required.",
+        min: v => v.length >= 8 || "Min 8 characters",
+        emailMatch: () => "The email and password you entered don't match"
+      }
     };
   },
   methods: {

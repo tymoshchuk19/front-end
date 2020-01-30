@@ -20,21 +20,15 @@
           <v-col cols="2" class="secondary">
             <v-row>
               <wm-groupform @newGroup="getGroups"></wm-groupform>
-              <wm-groups :groups="groups" ></wm-groups>
+              <wm-groups :groups="groups"></wm-groups>
             </v-row>
             <v-row>
-              <v-text-field 
-                type="text"
-                v-model="search"
-                filled
-                label="Group member"
-                clearable
-              ></v-text-field>
+              <v-text-field type="text" v-model="search" filled label="Group member" clearable></v-text-field>
               <wm-members :members="filteredMembers"></wm-members>
             </v-row>
           </v-col>
           <v-col cols="6">
-            <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
+            <wm-postform :api="postApi" @newPost="() => getPosts($route.params.group_id)"></wm-postform>
             <v-divider class="mb-2"></v-divider>
             <wm-posts :posts="posts"></wm-posts>
           </v-col>
@@ -102,7 +96,7 @@ export default {
 
       this.group_id = to.params.group_id;
       this.taskApi = API + "groups/" + to.params.group_id + "/tasks";
-
+      this.postApi = API + "groups/" + to.params.group_id + "/posts";
       this.getGroup(to.params.group_id);
       this.getGroups();
       this.getPosts(to.params.group_id);
@@ -124,8 +118,10 @@ export default {
       axios.get(API + "my/groups").then(data => (this.groups = data.data));
     },
     getMembers() {
-      axios.get(API + "groups/"+ this.group_id +"/members")
-      .then(data => {this.members = data.data;console.log(data.data);});
+      axios.get(API + "groups/" + this.group_id + "/members").then(data => {
+        this.members = data.data;
+        console.log(data.data);
+      });
     },
     getTasks(group_id) {
       axios
@@ -141,11 +137,11 @@ export default {
     this.getTasks(this.$route.params.group_id);
   },
   computed: {
-        filteredMembers: function(){
-            return this.members.filter((member) => {
-                return member.user.nome.match(this.search);
-            });
-        }
+    filteredMembers: function() {
+      return this.members.filter(member => {
+        return member.user.nome.match(this.search);
+      });
     }
+  }
 };
 </script>
