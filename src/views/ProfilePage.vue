@@ -2,7 +2,9 @@
   <div>
     <v-app-bar app color="indigo darken-2" dark dense>
       <div class="d-flex align-center">
-        <v-toolbar-title>WorkuM</v-toolbar-title>
+        <wm-searchbar />
+
+        <v-toolbar-title>Place holder</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -27,7 +29,7 @@
       </v-col>
       <v-col cols="3" class="secondary">
         <wm-tasks :tasks="tasks"></wm-tasks>
-        <br/>
+        <br />
         <wm-friendslist></wm-friendslist>
       </v-col>
     </v-row>
@@ -44,6 +46,8 @@ import Header from "../components/Header";
 import Groups from "../components/Groups";
 import Signout from "../components/Signout";
 //import Footer from "../components/Footer";
+import SearchBar from "../components/SearchBar";
+
 import FriendsList from "../components/FriendsList";
 import { API } from "../../config/config";
 import axios from "axios";
@@ -57,8 +61,18 @@ export default {
     "wm-header": Header,
     "wm-groups": Groups,
     "wm-signout": Signout,
+    "wm-searchbar": SearchBar,
+
     //"wm-footer": Footer,
     "wm-friendslist": FriendsList
+  },
+  watch: {
+    $route() {
+      this.getUserProfile();
+      this.getPosts();
+      this.getGroups();
+      this.getTasks();
+    }
   },
   data() {
     return {
@@ -71,7 +85,9 @@ export default {
   },
   methods: {
     getUserProfile() {
-      axios.get(API + "users/" + this.$route.params.user_id ).then(data => this.userprofile = data.data);
+      axios
+        .get(API + "users/" + this.$route.params.user_id)
+        .then(data => (this.userprofile = data.data));
     },
     getPosts() {
       axios.get(API + "feed").then(data => (this.posts = data.data));
@@ -86,10 +102,8 @@ export default {
     },
     addFriend() {
       axios
-        .post(API + "users/" + this.userprofile._id + "/request",{
-            
-        })
-        .then(() => console.log('request sended'));
+        .post(API + "users/" + this.userprofile._id + "/request", {})
+        .then(() => console.log("request sended"));
     }
   },
   mounted() {

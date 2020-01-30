@@ -2,16 +2,14 @@
   <div class="home">
     <v-app-bar app color="indigo darken-2" dark dense>
       <div class="d-flex align-center">
+        <wm-searchbar />
+
         <v-toolbar-title>Place holder</v-toolbar-title>
       </div>
-      <wm-searchbar />
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-row>
       <v-col cols="3">
-        <router-link :to="{ path: '/users/5e2084242c27784f03a9fd83' }">
-          <v-btn text>Ricardo Canela</v-btn>
-        </router-link>
         <wm-workum></wm-workum>
       </v-col>
       <v-col cols="6">

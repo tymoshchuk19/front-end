@@ -1,5 +1,13 @@
 <template>
   <div>
+    <v-app-bar app color="indigo darken-2" dark dense>
+      <div class="d-flex align-center">
+        <wm-searchbar />
+
+        <v-toolbar-title>Place holder</v-toolbar-title>
+      </div>
+      <v-spacer></v-spacer>
+    </v-app-bar>
     <v-row>
       <v-col cols="3">
         <wm-workum></wm-workum>
@@ -21,12 +29,12 @@
         </v-row>
         <v-divider></v-divider>
         <v-text-field type="text" v-model="newmember" filled label="Find friend" clearable></v-text-field>
-        <wm-newmembers 
+        <wm-newmembers
           @newMember="() => getMembers()"
-          :friends="filteredFriends" 
-          :perms="admin" 
-          :group="group_id">
-        </wm-newmembers>
+          :friends="filteredFriends"
+          :perms="admin"
+          :group="group_id"
+        ></wm-newmembers>
         <v-divider></v-divider>
         <v-text-field type="text" v-model="search" filled label="Group member" clearable></v-text-field>
         <wm-members :members="filteredMembers"></wm-members>
@@ -37,11 +45,7 @@
         <wm-posts :posts="posts"></wm-posts>
       </v-col>
       <v-col cols="3" class="secondary">
-        <wm-taskform 
-          v-if="admin"
-          @newTask="() => getTasks(group_id)" 
-          :taskApi="taskApi">
-        </wm-taskform>
+        <wm-taskform v-if="admin" @newTask="() => getTasks(group_id)" :taskApi="taskApi"></wm-taskform>
         <wm-tasks :tasks="tasks" :perms="admin" @newTask="() => getTasks(group_id)"></wm-tasks>
       </v-col>
     </v-row>
@@ -61,6 +65,8 @@ import Tasks from "../components/Tasks";
 import TasksForm from "../components/TasksForm";
 import GroupForm from "../components/GroupForm";
 import Groups from "../components/Groups";
+import SearchBar from "../components/SearchBar";
+
 import { API } from "../../config/config";
 import axios from "axios";
 //import Footer from "../components/Footer";
@@ -81,7 +87,8 @@ export default {
     "wm-groups": Groups,
     //"wm-footer": Footer,
     "wm-members": Members,
-    "wm-newmembers": NewMember
+    "wm-newmembers": NewMember,
+    "wm-searchbar": SearchBar
   },
   data() {
     return {
@@ -117,22 +124,19 @@ export default {
         .then(data => (this.posts = data.data.posts));
     },
     getGroup(group_id) {
-      axios
-        .get(API + "groups/" + group_id)
-        .then(data => {
-          (this.group = data.data);
-          this.admin = this.group.users.find(obj => {
-                  return (obj.user._id === this.user._id && obj.role === 'admin');
-                });
+      axios.get(API + "groups/" + group_id).then(data => {
+        this.group = data.data;
+        this.admin = this.group.users.find(obj => {
+          return obj.user._id === this.user._id && obj.role === "admin";
         });
+      });
     },
     getGroups() {
       axios.get(API + "my/groups").then(data => (this.groups = data.data));
     },
     getMembers() {
-      axios.get(API + "groups/" + this.group_id + "/members")
-        .then(data => {
-          this.members = data.data;
+      axios.get(API + "groups/" + this.group_id + "/members").then(data => {
+        this.members = data.data;
       });
     },
     getTasks(group_id) {
@@ -149,17 +153,17 @@ export default {
     this.getTasks(this.$route.params.group_id);
   },
   computed: {
-        filteredMembers: function(){
-            return this.members.filter((member) => {
-                return member.user.nome.match(this.search);
-            });
-        },
-        filteredFriends: function(){
-            return this.user.friends.filter((friend) => {
-                return friend.nome.match(this.newmember);
-            });
-        },
-        ...mapState(["user"])
-    }
+    filteredMembers: function() {
+      return this.members.filter(member => {
+        return member.user.nome.match(this.search);
+      });
+    },
+    filteredFriends: function() {
+      return this.user.friends.filter(friend => {
+        return friend.nome.match(this.newmember);
+      });
+    },
+    ...mapState(["user"])
+  }
 };
 </script>

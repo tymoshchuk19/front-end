@@ -1,50 +1,38 @@
 <template>
-  <v-card color="red lighten-2" dark>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <v-card-text>
-      <v-autocomplete
-        v-model="model"
-        :items="items"
-        :loading="isLoading"
-        :search-input.sync="search"
-        color="white"
-        hide-no-data
-        hide-selected
-        item-text="nome"
-        item-value="API"
-        label="Public APIs"
-        placeholder="Start typing to Search"
-        prepend-icon="mdi-database-search"
-        return-object
-      ></v-autocomplete>
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-expand-transition>
-      <v-list v-if="model" class="red lighten-3">
-        <v-list-item v-for="(field, i) in fields" :key="i">
-          <v-list-item-content>
-            <v-list-item-title v-text="field.value"></v-list-item-title>
-            <v-list-item-subtitle v-text="field.key"></v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-expand-transition>
-    <v-card-actions>
-      <v-spacer></v-spacer>
+  <diV class="d-flex">
+    <v-autocomplete
+      v-model="model"
+      :items="items"
+      :loading="isLoading"
+      :search-input.sync="search"
+      color="white"
+      hide-no-data
+      hide-selected
+      item-text="nome"
+      item-value="API"
+      placeholder="Search profile"
+      prepend-icon="mdi-profile"
+      return-object
+    ></v-autocomplete>
+    <v-btn
+      :disabled="!model"
+      color="grey darken-3"
+      @click="() => {$router.push({path: `/users/${model._id}`})}"
+    >
+      Search
+      <v-icon right>mdi-glass</v-icon>
+    </v-btn>
+    <v-btn :disabled="!model" color="grey darken-3" @click="model = null">
+      Clear
+      <v-icon right>mdi-close-circle</v-icon>
+    </v-btn>
+    <!-- <v-card-actions>
       <v-btn :disabled="!model" color="grey darken-3" @click="model = null">
         Clear
         <v-icon right>mdi-close-circle</v-icon>
       </v-btn>
-    </v-card-actions>
-  </v-card>
+    </v-card-actions>-->
+  </diV>
 </template>
 
 <script>

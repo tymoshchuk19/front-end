@@ -17,7 +17,12 @@
                   <v-list-item-subtitle>{{com.author.email}}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
-                  <v-btn icon @click="menu = false">
+                  <v-btn
+                    icon
+                    @click="() => {
+                    $router.push({path : `/users/${com.author._id}`});
+                    }"
+                  >
                     <v-icon>mdi-account-box</v-icon>
                   </v-btn>
                 </v-list-item-action>
