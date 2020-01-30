@@ -3,9 +3,8 @@
     <v-app-bar app color="indigo darken-2" dark dense>
       <div class="d-flex align-center">
         <v-toolbar-title>Place holder</v-toolbar-title>
-      </div><<<<<<< HEAD
-      <wm-searchbar />=======
-      >>>>>>> 80e448087ef89884309b1c78f71748aa04a019b6
+      </div>
+      <wm-searchbar />
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-row>
@@ -37,7 +36,7 @@
         <wm-friendslist></wm-friendslist>
       </v-col>
     </v-row>
-    <!-- <wm-footer></wm-footer> -->
+    <wm-footer></wm-footer>
   </div>
 </template>
 
@@ -52,7 +51,6 @@ import PostForm from "../components/PostForm";
 import GroupForm from "../components/GroupForm";
 import Footer from "../components/Footer";
 import FriendsList from "../components/FriendsList";
-import SideBar from "../components/SideBar";
 import SearchBar from "../components/SearchBar";
 import { API } from "../../config/config";
 import axios from "axios";
@@ -70,11 +68,8 @@ export default {
     "wm-postform": PostForm,
     "wm-groupform": GroupForm,
     "wm-footer": Footer,
-    "wm-sidebar": SideBar,
     "wm-friendslist": FriendsList,
-    "wm-searchbar": SearchBar,
-    "wm-footer": Footer,
-    "wm-friendslist": FriendsList
+    "wm-searchbar": SearchBar
   },
   data() {
     return {
