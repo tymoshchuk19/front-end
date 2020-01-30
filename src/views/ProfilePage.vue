@@ -17,7 +17,8 @@
       </v-col>
       <v-col cols="3">
         <wm-signout></wm-signout>
-        <v-btn text @click="addFriend">Add friend</v-btn>
+        <v-btn v-if="!mates" color="primary" @click="addFriend">Add friend</v-btn>
+        <v-btn v-else color="primary" @click="removeFriend">Remove friend</v-btn>
       </v-col>
     </v-row>
     <v-row>
@@ -76,6 +77,7 @@ export default {
   },
   data() {
     return {
+      mates: false,
       userprofile: null,
       posts: null,
       groups: null,
@@ -90,7 +92,7 @@ export default {
         .then(data => (this.userprofile = data.data));
     },
     getPosts() {
-      axios.get(API + "feed").then(data => (this.posts = data.data));
+      axios.get(API + "users/" + this.$route.params.user_id + '/posts').then(data => (this.posts = data.data));
     },
     getGroups() {
       axios.get(API + "my/groups").then(data => (this.groups = data.data));
@@ -103,7 +105,17 @@ export default {
     addFriend() {
       axios
         .post(API + "users/" + this.userprofile._id + "/request", {})
-        .then(() => console.log("request sended"));
+        .then(() => {
+          console.log("request sended");
+        });
+    },
+    removeFriend() {
+      axios
+        .post(API + "users/" + this.userprofile._id + "/remove", {})
+        .then(() => {
+          console.log("request sended");
+          this.mates = !this.mates;
+          });
     }
   },
   mounted() {
@@ -111,6 +123,9 @@ export default {
     this.getPosts();
     this.getGroups();
     this.getTasks();
+    this.mates = this.user.friends.find(obj => {
+      return obj._id === this.$route.params.user_id;
+    });
   },
   computed: {
     ...mapState(["user"])
