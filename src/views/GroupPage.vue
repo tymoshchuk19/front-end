@@ -27,7 +27,12 @@
           label="Group member"
           clearable
         ></v-text-field>
-        <wm-members :members="filteredMembers"></wm-members>
+        <wm-members
+          @newMember="() => getMembers()"
+          :members="filteredMembers"
+          :perms="admin"
+          :group="group_id"
+        ></wm-members>
       </v-col>
       <v-col cols="6">
         <wm-header :name="group.name"></wm-header>

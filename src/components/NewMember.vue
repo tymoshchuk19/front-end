@@ -13,14 +13,6 @@
           <v-btn 
             v-if="perms"
             icon 
-            color="red"
-            @click="deleteMember(group + '/members/' + friend._id)" 
-            >
-                <v-icon size="20">mdi-close-circle</v-icon>
-          </v-btn>
-          <v-btn 
-            v-if="perms"
-            icon 
             color="green"
             @click="addMember(group + '/members/',friend.email)" 
             >
@@ -41,13 +33,6 @@ import axios from "axios";
       }
     },
     methods: {
-      deleteMember(path) {
-        axios
-          .delete(API + "groups/" + path)
-          .then(() => 
-            this.$emit('newMember')
-          );
-      },
       addMember(path, email) {
         axios
           .post(API + "groups/" + path,{
