@@ -37,7 +37,12 @@
         ></wm-newmembers>
         <v-divider></v-divider>
         <v-text-field type="text" v-model="search" filled label="Group member" clearable></v-text-field>
-        <wm-members :members="filteredMembers"></wm-members>
+        <wm-members 
+          @newMember="() => getMembers()"
+          :members="filteredMembers"
+          :perms="admin"
+          :group="group_id"
+        ></wm-members>
       </v-col>
       <v-col cols="6">
         <wm-postform :api="postApi" @newPost="() => getPosts($route.params.group_id)"></wm-postform>

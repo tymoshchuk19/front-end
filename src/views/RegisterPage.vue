@@ -92,7 +92,13 @@ export default {
         this.bdate = updatedDate;
       },
       register() {
-        axios.post(API + 'register', { email: this.email, nome: this.name, bDate: this.bdate,about: this.about, password: this.password })
+        axios.post(API + 'register', { 
+            email: this.email, 
+            nome: this.name, 
+            bDate: this.bdate,
+            about: this.about, 
+            password: this.password 
+        })
           .then(() => {
               this.$router.push('/login');
           });
