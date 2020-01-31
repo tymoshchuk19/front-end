@@ -1,17 +1,19 @@
 <template>
   <div class="footer">
-    <v-footer class="secondary" padless app>
+    <v-footer class="secondary" padless height="40" app>
       <v-col class="text-center" cols="12">
         <div class="text-center">
           <!-- -->
           <v-bottom-sheet v-model="chat" fullscreen>
             <template v-slot:activator="{ on }">
-              <v-btn v-on="on" text>
-                <strong>Chat</strong>
-                <v-icon>mdi-chat</v-icon>
+              <v-btn class="mb-3 pb-5" v-on="on" text>
+                <strong class="white--text">Chat </strong>
+                <v-icon class="ml-1" color="white">mdi-chat</v-icon>
               </v-btn>
             </template>
-            <v-btn class="mt-12" flat color="error" @click="chat = !chat">close</v-btn>
+            <v-btn class="mt-12" tile color="error" @click="chat = !chat"
+              >close</v-btn
+            >
 
             <Chat />
           </v-bottom-sheet>
@@ -21,17 +23,6 @@
         <v-icon>mdi-chat</v-icon>-->
       </v-col>
     </v-footer>
-    <v-bottom-sheet v-model="chat" fullscreen>
-      <template v-slot:activator="{ on }">
-        <v-btn v-on="on" text>
-          <strong>Chat</strong>
-          <v-icon>mdi-chat</v-icon>
-        </v-btn>
-      </template>
-      <v-btn class="mt-12" flat color="error" @click="chat = !chat">close</v-btn>
-
-      <Chat />
-    </v-bottom-sheet>
   </div>
 </template>
 

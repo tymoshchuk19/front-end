@@ -1,34 +1,18 @@
 <template>
-  <div>
-    <v-app-bar app color="indigo darken-2" dark dense>
-      <div class="d-flex align-center">
-        <wm-searchbar />
-
-        <v-toolbar-title>Place holder</v-toolbar-title>
-      </div>
-      <v-spacer></v-spacer>
-    </v-app-bar>
+  <div class="page">
+    <wm-topbar />
     <v-row>
       <v-col cols="3">
-        <wm-workum></wm-workum>
-      </v-col>
-      <v-col cols="6">
-        <wm-header :name="group.name"></wm-header>
-      </v-col>
-      <v-col cols="3">
-        <wm-signout></wm-signout>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="3" class="secondary">
-        <v-row>
-          <wm-groupform @newGroup="getGroups"></wm-groupform>
-        </v-row>
-        <v-row>
-          <wm-groups :groups="groups"></wm-groups>
-        </v-row>
+        <wm-groupform @newGroup="getGroups"></wm-groupform>
+        <wm-groups :groups="groups"></wm-groups>
         <v-divider></v-divider>
-        <v-text-field type="text" v-model="newmember" filled label="Add member" clearable></v-text-field>
+        <v-text-field
+          type="text"
+          v-model="newmember"
+          filled
+          label="Add member"
+          clearable
+        ></v-text-field>
         <wm-newmembers
           @newMember="() => getMembers()"
           :friends="filteredFriends"
@@ -36,17 +20,36 @@
           :group="group_id"
         ></wm-newmembers>
         <v-divider></v-divider>
-        <v-text-field type="text" v-model="search" filled label="Group member" clearable></v-text-field>
+        <v-text-field
+          type="text"
+          v-model="search"
+          filled
+          label="Group member"
+          clearable
+        ></v-text-field>
         <wm-members :members="filteredMembers"></wm-members>
       </v-col>
       <v-col cols="6">
-        <wm-postform :api="postApi" @newPost="() => getPosts($route.params.group_id)"></wm-postform>
+        <wm-header :name="group.name"></wm-header>
+
+        <wm-postform
+          :api="postApi"
+          @newPost="() => getPosts($route.params.group_id)"
+        ></wm-postform>
         <v-divider class="mb-2"></v-divider>
         <wm-posts :posts="posts"></wm-posts>
       </v-col>
-      <v-col cols="3" class="secondary">
-        <wm-taskform v-if="admin" @newTask="() => getTasks(group_id)" :taskApi="taskApi"></wm-taskform>
-        <wm-tasks :tasks="tasks" :perms="admin" @newTask="() => getTasks(group_id)"></wm-tasks>
+      <v-col cols="3">
+        <wm-taskform
+          v-if="admin"
+          @newTask="() => getTasks(group_id)"
+          :taskApi="taskApi"
+        ></wm-taskform>
+        <wm-tasks
+          :tasks="tasks"
+          :perms="admin"
+          @newTask="() => getTasks(group_id)"
+        ></wm-tasks>
       </v-col>
     </v-row>
     <wm-footer></wm-footer>
@@ -58,14 +61,12 @@
 
 import Posts from "../components/Posts";
 import PostForm from "../components/PostForm";
-import Workum from "../components/Workum";
 import Header from "../components/Header";
-import Signout from "../components/Signout";
 import Tasks from "../components/Tasks";
 import TasksForm from "../components/TasksForm";
 import GroupForm from "../components/GroupForm";
 import Groups from "../components/Groups";
-import SearchBar from "../components/SearchBar";
+import TopBarVue from "../components/TopBar.vue";
 
 import { API } from "../../config/config";
 import axios from "axios";
@@ -78,9 +79,7 @@ export default {
   components: {
     "wm-posts": Posts,
     "wm-postform": PostForm,
-    "wm-workum": Workum,
     "wm-header": Header,
-    "wm-signout": Signout,
     "wm-tasks": Tasks,
     "wm-taskform": TasksForm,
     "wm-groupform": GroupForm,
@@ -88,7 +87,7 @@ export default {
     "wm-footer": Footer,
     "wm-members": Members,
     "wm-newmembers": NewMember,
-    "wm-searchbar": SearchBar
+    "wm-topbar": TopBarVue
   },
   data() {
     return {
@@ -167,3 +166,9 @@ export default {
   }
 };
 </script>
+
+<style>
+html body {
+  height: 100% !important;
+}
+</style>

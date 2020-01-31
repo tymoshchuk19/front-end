@@ -1,9 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="290">
+    <v-dialog v-model="dialog" persistent max-width="450">
       <template v-slot:activator="{ on }">
-        <v-btn block tile color="primary" dark v-on="on">
-          New Post
+        <v-btn class="pa-0 button-width" color="indigo darken-1" tile dark v-on="on">
+          Create new post
+          <v-icon class="ml-2" size="26" color="white">mdi-plus-circle</v-icon>
         </v-btn>
       </template>
       <v-card class="pr-2 pl-2 pb-2 mb-4">
@@ -16,23 +17,8 @@
             @input="$v.title.$touch()"
             @blur="$v.title.$touch()"
           ></v-text-field>
-          <v-textarea
-            counter
-            outlined
-            v-model="body"
-            label="Content"
-            :rules="rules"
-          ></v-textarea>
-          <v-combobox
-                multiple
-                solo
-                clearable
-                v-model="tags"
-                chips
-                deletable-chips
-                label="Tags"
-            >
-          </v-combobox>
+          <v-textarea counter outlined v-model="body" label="Content" :rules="rules"></v-textarea>
+          <v-combobox multiple solo clearable v-model="tags" chips deletable-chips label="Tags"></v-combobox>
 
           <v-btn class="primary mr-4" text rounded @click="submit">Submit</v-btn>
           <v-btn color="primary darken-1" text @click="dialog = false">Close</v-btn>
@@ -58,13 +44,13 @@ export default {
     body: { required }
   },
 
-    data: () => ({
-      dialog: false,
-      title: '',
-      rules: [v => !!v || 'Content is required.'],
-      body: '',
-      tags: '',
-    }),
+  data: () => ({
+    dialog: false,
+    title: "",
+    rules: [v => !!v || "Content is required."],
+    body: "",
+    tags: ""
+  }),
 
   computed: {
     titleErrors() {
@@ -88,10 +74,10 @@ export default {
           body: this.body,
           tags: this.tags ? this.tags : []
         })
-        .then(() => { 
+        .then(() => {
           this.dialog = false;
-          this.$emit('newPost'); 
-          this.clear()
+          this.$emit("newPost");
+          this.clear();
         });
     },
     clear() {
@@ -103,3 +89,11 @@ export default {
   }
 };
 </script>
+
+<style>
+.button-width {
+  width: 97.5%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+</style>

@@ -10,15 +10,15 @@
             v-on:new-conversation="getConversations"
           />
         </v-col>
-        <v-col cols="7" class="grey lighten-2 relative full-height">
+        <v-col cols="10" class="grey lighten-2 relative full-height">
           <div class="msger">
             <div id="chat-col" class="chat-overflow" v-chat-scroll>
               <Logs :messages="messages" />
             </div>
             <v-footer color>
-              <v-btn class="ml-3" icon color="primary">
+              <!-- <v-btn class="ml-3" icon color="primary">
                 <v-icon class="mr-3" size="37" color="primary">mdi-plus-circle</v-icon>
-              </v-btn>
+              </v-btn> -->
               <v-text-field
                 v-model="message"
                 rounded
@@ -28,14 +28,19 @@
                 placeholder="Escreve uma mensagem"
                 v-on:keyup.enter="postMessage(message)"
               ></v-text-field>
-              <v-btn class="ml-3" icon color="primary" v-on:click="postMessage(message)">
+              <v-btn
+                class="ml-3"
+                icon
+                color="primary"
+                v-on:click="postMessage(message)"
+              >
                 <v-icon size="37">mdi-send-circle</v-icon>
               </v-btn>
             </v-footer>
           </div>
         </v-col>
         <v-col cols="3">
-          <Profile />
+          <!-- <Profile /> -->
         </v-col>
       </v-row>
     </v-layout>
@@ -50,14 +55,14 @@ import axios from "axios";
 
 import Logs from "./Logs";
 import List from "./List";
-import Profile from "./Profile";
+// import Profile from "./Profile";
 export default {
   name: "Chat",
 
   components: {
     Logs,
-    List,
-    Profile
+    List
+    // Profile
   },
   mounted() {
     this.getConversations();

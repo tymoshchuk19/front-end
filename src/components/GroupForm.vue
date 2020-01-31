@@ -1,8 +1,17 @@
 <template>
-  <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="290">
+  <v-row justify="center" class="ml-2 mr-1">
+    <v-dialog v-model="dialog" persistent max-width="450">
       <template v-slot:activator="{ on }">
-        <v-btn block tile color="primary" dark v-on="on">New Group</v-btn>
+        <v-btn
+          class="pa-0 button-width"
+          color="indigo darken-1"
+          tile
+          dark
+          v-on="on"
+        >
+          Create new Group
+          <v-icon class="ml-2" size="26" color="white">mdi-plus-circle</v-icon>
+        </v-btn>
       </template>
       <v-card class="pr-2 pl-2 pb-2 mb-4">
         <form>
@@ -14,16 +23,25 @@
             @input="$v.name.$touch()"
             @blur="$v.name.$touch()"
           ></v-text-field>
-          <v-textarea counter outlined v-model="description" label="Description" :rules="rules"></v-textarea>
+          <v-textarea
+            counter
+            outlined
+            v-model="description"
+            label="Description"
+            :rules="rules"
+          ></v-textarea>
 
-          <v-btn class="primary mr-4" text rounded @click="submit">submit</v-btn>
-          <v-btn color="primary darken-1" text @click="dialog = false">Close</v-btn>
+          <v-btn class="primary mr-4" text rounded @click="submit"
+            >submit</v-btn
+          >
+          <v-btn color="primary darken-1" text @click="dialog = false"
+            >Close</v-btn
+          >
         </form>
       </v-card>
     </v-dialog>
   </v-row>
 </template>
-
 
 <script>
 import { validationMixin } from "vuelidate";

@@ -1,34 +1,16 @@
 <template>
-  <div class="home">
-    <v-app-bar app color="indigo darken-2" dark dense>
-      <div class="d-flex align-center">
-        <wm-searchbar />
-
-        <v-toolbar-title>Place holder</v-toolbar-title>
-      </div>
-      <v-spacer></v-spacer>
-    </v-app-bar>
-    <v-row>
+  <div>
+    <wm-topbar />
+    <v-row class="page">
       <v-col cols="3">
-        <wm-workum></wm-workum>
-      </v-col>
-      <v-col cols="6">
-        <wm-header :name="user.nome"></wm-header>
-      </v-col>
-      <v-col cols="3">
-        <wm-signout></wm-signout>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="3" class="secondary">
         <wm-groupform @newGroup="getGroups"></wm-groupform>
         <wm-groups :groups="groups"></wm-groups>
       </v-col>
-      <v-col cols="6" class="secondary">
+      <v-col cols="6">
         <wm-postform :api="postApi" @newPost="getPosts"></wm-postform>
         <wm-posts :posts="posts"></wm-posts>
       </v-col>
-      <v-col cols="3" class="secondary">
+      <v-col cols="3">
         <wm-tasks :tasks="tasks"></wm-tasks>
         <br />
         <wm-friendslist></wm-friendslist>
@@ -40,34 +22,29 @@
 
 <script>
 import Posts from "../components/Posts";
-import Workum from "../components/Workum";
 import Tasks from "../components/Tasks";
-import Header from "../components/Header";
+// import Header from "../components/Header"
 import Groups from "../components/Groups";
-import Signout from "../components/Signout";
 import PostForm from "../components/PostForm";
 import GroupForm from "../components/GroupForm";
 import Footer from "../components/Footer";
 import FriendsList from "../components/FriendsList";
-import SearchBar from "../components/SearchBar";
 import { API } from "../../config/config";
 import axios from "axios";
 import { mapState } from "vuex";
+import TopBarVue from "../components/TopBar.vue";
 
 export default {
   name: "home",
   components: {
     "wm-posts": Posts,
-    "wm-workum": Workum,
     "wm-tasks": Tasks,
-    "wm-header": Header,
     "wm-groups": Groups,
-    "wm-signout": Signout,
     "wm-postform": PostForm,
     "wm-groupform": GroupForm,
     "wm-footer": Footer,
     "wm-friendslist": FriendsList,
-    "wm-searchbar": SearchBar
+    "wm-topbar": TopBarVue
   },
   data() {
     return {
@@ -100,3 +77,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.page {
+  background-color: #f2e68f;
+}
+</style>

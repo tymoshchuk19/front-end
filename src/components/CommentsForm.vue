@@ -10,7 +10,7 @@
         rounded
         hide-details
       ></v-text-field>
-      <v-btn class="ml-3" icon color="primary" v-on:click="postMessage(message)">
+      <v-btn class="ml-3" icon color="indigo darken-1" v-on:click="postMessage(message)">
         <v-icon @click="submit" size="45">mdi-send-circle</v-icon>
       </v-btn>
     </form>

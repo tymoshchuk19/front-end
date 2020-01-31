@@ -1,7 +1,12 @@
 <template>
   <v-card class="mb-2">
     <v-list-item three-line>
-      <v-menu v-model="menu" top transition="slide-y-transition" origin="bottom">
+      <v-menu
+        v-model="menu"
+        top
+        transition="slide-y-transition"
+        origin="bottom"
+      >
         <template v-slot:activator="{ on }">
           <v-list-item-avatar v-on="on" size="40" color="primary">
             <img :src="post.posted_by.image" :alt="post.posted_by.nome" />
@@ -12,47 +17,61 @@
           <v-list class="no-border" dark tile>
             <v-list-item>
               <v-list-item-content>
-                <v-list-item-title>{{post.posted_by.nome}}</v-list-item-title>
-                <v-list-item-subtitle>{{post.posted_by.email}}</v-list-item-subtitle>
+                <v-list-item-title>{{ post.posted_by.nome }}</v-list-item-title>
+                <v-list-item-subtitle>{{
+                  post.posted_by.email
+                }}</v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
                 <v-btn
                   icon
-                  @click="() => {
-                    $router.push({path : `/users/${post.posted_by._id}`});
-                    }"
+                  @click="
+                    () => {
+                      $router.push({ path: `/users/${post.posted_by._id}` });
+                    }
+                  "
                 >
                   <v-icon>mdi-account-box</v-icon>
                 </v-btn>
               </v-list-item-action>
             </v-list-item>
           </v-list>
-          <v-list-item @click="() => {}">
-            <v-icon class="ma-auto">mdi-message-text</v-icon>
-          </v-list-item>
         </v-card>
       </v-menu>
 
       <v-list-item-content>
-        <v-list-item-title class="headline mb-0">{{post.title}}</v-list-item-title>
-        <v-list-item-action-text>{{fromNow}}</v-list-item-action-text>
+        <v-list-item-title class="headline mb-0">{{
+          post.title
+        }}</v-list-item-title>
+        <v-list-item-action-text>{{ fromNow }}</v-list-item-action-text>
         <v-chip-group column>
           <v-chip v-for="tag in post.tags" :key="tag">{{ tag }}</v-chip>
         </v-chip-group>
 
-        <v-list-item-action-text class="black--text mt-2 body-1">{{post.body}}</v-list-item-action-text>
+        <v-list-item-action-text class="black--text mt-2 body-1">{{
+          post.body
+        }}</v-list-item-action-text>
       </v-list-item-content>
     </v-list-item>
     <v-card-actions class="d-flex flex-row-reverse">
       <v-btn @click="like" class="secprimary" text rounded>
-        <span class="white--text text-lowercase mr-2">{{ nlikes }}</span>
-        <v-icon v-if="liked" color="white">mdi-thumb-up</v-icon>
-        <v-icon v-else color="white">mdi-thumb-up-outline</v-icon>
+        <span class="indigo--text text-lowercase mr-2 font-weight-black">{{
+          nlikes
+        }}</span>
+        <v-icon v-if="liked" color="indigo">mdi-thumb-up</v-icon>
+        <v-icon v-else color="indigo">mdi-thumb-up-outline</v-icon>
       </v-btn>
     </v-card-actions>
 
-    <wm-comments @newLike="getComments" :postid="post._id" :coms="comments"></wm-comments>
-    <wm-commentform @newComment="getComments" :postid="post._id"></wm-commentform>
+    <wm-comments
+      @newLike="getComments"
+      :postid="post._id"
+      :coms="comments"
+    ></wm-comments>
+    <wm-commentform
+      @newComment="getComments"
+      :postid="post._id"
+    ></wm-commentform>
   </v-card>
 </template>
 
@@ -118,7 +137,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .no-border {
   border-radius: 0px;
 }

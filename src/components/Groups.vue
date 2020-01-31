@@ -1,22 +1,22 @@
 <template>
-    <div>
-      <div class="my-2" 
-        v-for="(group,i) in groups"
-        :key="i">
-        <router-link :to="{ path: '/groups/' + group._id }">
-          <v-btn text>{{ group.name }}</v-btn>
-        </router-link>
-      </div>
-    </div>
+  <v-card tile color="indigo darken-1 ml-2 pa-2">
+    <router-link
+      v-for="(group, i) in groups"
+      :key="i"
+      :to="{ path: '/groups/' + group._id }"
+    >
+      <v-card class="ma-2 mt-2">
+        <v-btn text>{{ group.name }}</v-btn>
+      </v-card>
+    </router-link>
+  </v-card>
 </template>
 
 <script>
-
 export default {
-  props: ['groups'],
+  props: ["groups"],
   data() {
-    return {
-    }
+    return {};
   }
-}
+};
 </script>

@@ -71,15 +71,15 @@ import { API } from "../../config/config";
 export default {
   name: "List",
   props: {
-    conversations: Array,
-    userData: Object
+    conversations: Array
   },
   data() {
     return {
       current: 0,
       cvUsers: null,
       cvImage: null,
-      cvName: null
+      cvName: null,
+      userData: this.$store.state.user
     };
   },
   methods: {

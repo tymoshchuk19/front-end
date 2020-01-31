@@ -1,37 +1,28 @@
 <template>
-  <diV class="d-flex">
+  <diV class="d-flex input-width custom-placeholer-color">
     <v-autocomplete
+      background-color="grey darken-1"
+      rounded
       v-model="model"
       :items="items"
       :loading="isLoading"
       :search-input.sync="search"
-      color="white"
       hide-no-data
       hide-selected
+      hide-details
       item-text="nome"
       item-value="API"
       placeholder="Search profile"
-      prepend-icon="mdi-profile"
+      append-icon
       return-object
     ></v-autocomplete>
     <v-btn
-      :disabled="!model"
-      color="grey darken-3"
+      color="pa-0 transparent"
+      depressed
       @click="() => {$router.push({path: `/users/${model._id}`})}"
     >
-      Search
-      <v-icon right>mdi-glass</v-icon>
+      <v-icon>mdi-magnify</v-icon>
     </v-btn>
-    <v-btn :disabled="!model" color="grey darken-3" @click="model = null">
-      Clear
-      <v-icon right>mdi-close-circle</v-icon>
-    </v-btn>
-    <!-- <v-card-actions>
-      <v-btn :disabled="!model" color="grey darken-3" @click="model = null">
-        Clear
-        <v-icon right>mdi-close-circle</v-icon>
-      </v-btn>
-    </v-card-actions>-->
   </diV>
 </template>
 
@@ -62,15 +53,6 @@ export default {
       });
     },
     items() {
-      //   const ent = this.entries.map(entry => {
-      //     const Description =
-      //       entry.Description.length > this.descriptionLimit
-      //         ? entry.Description.slice(0, this.descriptionLimit) + "..."
-      //         : entry.Description;
-
-      //     return Object.assign({}, entry, { Description });
-      //   });
-      //   console.log(ent);
       return this.entries;
     }
   },
@@ -82,18 +64,6 @@ export default {
       if (this.isLoading) return;
 
       this.isLoading = true;
-
-      //   fetch("https://api.publicapis.org/entries")
-      //     .then(res => res.json())
-      //     .then(res => {
-      //       const { count, entries } = res;
-      //       this.count = count;
-      //       this.entries = entries;
-      //     })
-      //     .catch(err => {
-      //       console.log(err);
-      //     })
-      //     .finally(() => (this.isLoading = false));
 
       axios
         .get(`${API}users`)
@@ -111,4 +81,14 @@ export default {
 </script>
 
 <style>
+</style>
+
+<style >
+.input-width {
+  min-width: 700px;
+}
+.custom-placeholer-color input::placeholder {
+  color: whitesmoke !important;
+  opacity: 1;
+}
 </style>
